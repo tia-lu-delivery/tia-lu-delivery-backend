@@ -1,5 +1,6 @@
 package br.com.fooddelivery.tialudeliveryback.entity;
 
+import br.com.fooddelivery.tialudeliveryback.dto.EstabelecimentoDTO;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
@@ -15,6 +16,13 @@ public class EstabelecimentoEntity {
 
     @Column(nullable = false)
     private String nomeFantasia;
+
+    //-------------------------
+
+    public EstabelecimentoEntity(EstabelecimentoDTO estabelecimento) {
+        BeanUtils.copyProperties(estabelecimento, this);
+    }
+    public EstabelecimentoEntity() {}
 
     //-------
 
