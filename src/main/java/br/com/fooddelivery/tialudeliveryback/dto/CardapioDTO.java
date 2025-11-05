@@ -1,5 +1,7 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
+import br.com.fooddelivery.tialudeliveryback.entity.CategoriaEntity;
+import br.com.fooddelivery.tialudeliveryback.entity.EstabelecimentoEntity;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -48,6 +50,20 @@ public class CardapioDTO {
 
     public void setDataAtualizacao(String dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public EstabelecimentoDTO getEstabelecimento() {
+        return estabelecimento;
+    }
+    public void setEstabelecimento(EstabelecimentoDTO estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
+
+    public List<CategoriaDTO> getCategorias() {
+        return categorias;
+    }
+    public void setCategorias(List<CategoriaDTO> categorias) {
+        this.categorias = categorias;
     }
 
 }
