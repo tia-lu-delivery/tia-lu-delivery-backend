@@ -1,6 +1,8 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
 
+import org.springframework.beans.BeanUtils;
+
 public class CardapioDTO {
 
     private Long id;
@@ -8,6 +10,11 @@ public class CardapioDTO {
     private String nome;
 
     private String dataAtualizacao;
+
+    public CardapioDTO(CardapioDTO cardapio) {
+        BeanUtils.copyProperties(cardapio, this);
+    }
+    public CardapioDTO() {}
 
     public Long getId() {
         return id;

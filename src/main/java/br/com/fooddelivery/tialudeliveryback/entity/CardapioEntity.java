@@ -1,6 +1,8 @@
 package br.com.fooddelivery.tialudeliveryback.entity;
 
+import br.com.fooddelivery.tialudeliveryback.dto.CardapioDTO;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
@@ -16,6 +18,13 @@ public class CardapioEntity {
     private String nome;
 
     private String dataAtualizacao;
+
+    //---------------------------
+
+    public CardapioEntity(CardapioDTO cardapio) {
+        BeanUtils.copyProperties(cardapio, this);
+    }
+    public CardapioEntity() {}
 
     //-------------------------------
 
