@@ -1,7 +1,5 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
-import br.com.fooddelivery.tialudeliveryback.entity.CategoriaEntity;
-import br.com.fooddelivery.tialudeliveryback.entity.EstabelecimentoEntity;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
