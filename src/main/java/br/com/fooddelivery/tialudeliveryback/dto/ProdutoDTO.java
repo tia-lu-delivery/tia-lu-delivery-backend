@@ -1,6 +1,5 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
-
 import org.springframework.beans.BeanUtils;
 
 public class ProdutoDTO {
@@ -18,6 +17,8 @@ public class ProdutoDTO {
     private Boolean disponivel;
 
     private Integer estoque;
+
+    private CategoriaDTO categoria;
 
     //--------------------------------
 
@@ -75,6 +76,13 @@ public class ProdutoDTO {
     }
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
+    }
+
+    public CategoriaDTO getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(CategoriaDTO categoria) {
+        this.categoria = categoria;
     }
 
 }

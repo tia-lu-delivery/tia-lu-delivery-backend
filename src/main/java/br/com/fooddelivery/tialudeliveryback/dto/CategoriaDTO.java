@@ -2,6 +2,8 @@ package br.com.fooddelivery.tialudeliveryback.dto;
 
 import org.springframework.beans.BeanUtils;
 
+import java.util.List;
+
 public class CategoriaDTO {
 
     private Long id;
@@ -9,6 +11,10 @@ public class CategoriaDTO {
     private String nomeCategoria;
 
     private int ordem;
+
+    private CardapioDTO cardapio;
+
+    private List<ProdutoDTO> produtos;
 
     //-------------
 
@@ -38,6 +44,20 @@ public class CategoriaDTO {
     }
     public void setOrdem(int ordem) {
         this.ordem = ordem;
+    }
+
+    public CardapioDTO getCardapio() {
+        return cardapio;
+    }
+    public void setCardapio(CardapioDTO cardapio) {
+        this.cardapio = cardapio;
+    }
+
+    public List<ProdutoDTO> getProdutos() {
+        return produtos;
+    }
+    public void setProdutos(List<ProdutoDTO> produtos) {
+        this.produtos = produtos;
     }
 
 }

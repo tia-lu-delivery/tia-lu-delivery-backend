@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "CATEGORIA")
@@ -16,9 +17,14 @@ public class CategoriaEntity {
     @Column(nullable = false)
     private String nomeCategoria;
 
-    private int ordem;
+    private Integer ordem;
 
-    //produto fk
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cardapio_id", nullable = false)
+    private CardapioEntity cardapio;
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<ProdutoEntity> produtos;
 
     //-------
 
@@ -43,11 +49,25 @@ public class CategoriaEntity {
         this.nomeCategoria = nomeCategoria;
     }
 
-    public int getOrdem() {
+    public Integer getOrdem() {
         return ordem;
     }
-    public void setOrdem(int ordem) {
+    public void setOrdem(Integer ordem) {
         this.ordem = ordem;
+    }
+
+    public CardapioEntity getCardapio() {
+        return cardapio;
+    }
+    public void setCardapio(CardapioEntity cardapio) {
+        this.cardapio = cardapio;
+    }
+
+    public List<ProdutoEntity> getProdutos() {
+        return produtos;
+    }
+    public void setProdutos(List<ProdutoEntity> produtos) {
+        this.produtos = produtos;
     }
 
     //-------------

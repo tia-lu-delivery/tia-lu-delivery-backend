@@ -28,6 +28,10 @@ public class ProdutoEntity {
 
     private Integer estoque;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private CategoriaEntity categoria;
+
     //-------=--
 
     public ProdutoEntity(ProdutoDTO produto) {
@@ -84,6 +88,13 @@ public class ProdutoEntity {
     }
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
+    }
+
+    public CategoriaEntity getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(CategoriaEntity categoria) {
+        this.categoria = categoria;
     }
 
     //---------

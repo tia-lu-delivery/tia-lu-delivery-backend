@@ -4,6 +4,7 @@ import br.com.fooddelivery.tialudeliveryback.dto.CardapioDTO;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +19,13 @@ public class CardapioEntity {
     private String nomeCardapio;
 
     private String dataAtualizacao;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "estabelecimento_id", referencedColumnName = "id")
+    private EstabelecimentoEntity estabelecimento;
+
+    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.ALL)
+    private List<CategoriaEntity> categorias;
 
     //---------------------------
 
@@ -47,6 +55,20 @@ public class CardapioEntity {
     }
     public void setDataAtualizacao(String dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public EstabelecimentoEntity getEstabelecimento() {
+        return estabelecimento;
+    }
+    public void setEstabelecimento(EstabelecimentoEntity estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
+
+    public List<CategoriaEntity> getCategorias() {
+        return categorias;
+    }
+    public void setCategorias(List<CategoriaEntity> categorias) {
+        this.categorias = categorias;
     }
 
     //---------

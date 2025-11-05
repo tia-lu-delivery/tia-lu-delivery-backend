@@ -1,7 +1,8 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
-
 import org.springframework.beans.BeanUtils;
+
+import java.util.List;
 
 public class CardapioDTO {
 
@@ -10,6 +11,11 @@ public class CardapioDTO {
     private String nomeCardapio;
 
     private String dataAtualizacao;
+
+    private EstabelecimentoDTO estabelecimento;
+
+    private List<CategoriaDTO> categorias;
+
 
     //--------------------------------
 
