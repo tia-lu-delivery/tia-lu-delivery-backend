@@ -1,23 +1,14 @@
-package br.com.fooddelivery.tialudeliveryback.entity;
+package br.com.fooddelivery.tialudeliveryback.dto;
 
-import br.com.fooddelivery.tialudeliveryback.dto.ProdutoDTO;
-import jakarta.persistence.*;
+
 import org.springframework.beans.BeanUtils;
 
-import java.util.Objects;
+public class ProdutoDTO {
 
-@Entity
-@Table(name = "PRODUTO")
-public class ProdutoEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String nomeProduto;
 
-    @Lob
     private String descricao;
 
     private Double precoUnitario;
@@ -28,14 +19,14 @@ public class ProdutoEntity {
 
     private Integer estoque;
 
-    //-------=--
+    //--------------------------------
 
-    public ProdutoEntity(ProdutoDTO produto) {
+    public ProdutoDTO(ProdutoDTO produto) {
         BeanUtils.copyProperties(produto, this);
     }
-    public ProdutoEntity() {}
+    public ProdutoDTO() {}
 
-    //----------------------------
+    //-----------------------------
 
     public Long getId() {
         return id;
@@ -84,23 +75,6 @@ public class ProdutoEntity {
     }
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
-    }
-
-    //---------
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-
-        ProdutoEntity other = (ProdutoEntity) obj;
-        return Objects.equals(id, other.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
 }
