@@ -7,14 +7,18 @@ public class CardapioDTO {
 
     private Long id;
 
-    private String nome;
+    private String nomeCardapio;
 
     private String dataAtualizacao;
+
+    //--------------------------------
 
     public CardapioDTO(CardapioDTO cardapio) {
         BeanUtils.copyProperties(cardapio, this);
     }
     public CardapioDTO() {}
+
+    //-----------------------------
 
     public Long getId() {
         return id;
@@ -24,12 +28,12 @@ public class CardapioDTO {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeCardapio() {
+        return nomeCardapio;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeCardapio(String nomeCardapio) {
+        this.nomeCardapio = nomeCardapio;
     }
 
     public String getDataAtualizacao() {

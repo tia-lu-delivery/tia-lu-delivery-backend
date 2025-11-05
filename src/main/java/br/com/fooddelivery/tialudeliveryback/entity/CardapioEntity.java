@@ -15,7 +15,7 @@ public class CardapioEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String nome;
+    private String nomeCardapio;
 
     private String dataAtualizacao;
 
@@ -31,16 +31,26 @@ public class CardapioEntity {
     public Long getId() {
         return id;
     }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getNome() {
-        return nome;
+    public String getNomeCardapio() {
+        return nomeCardapio;
+    }
+    public void setNomeCardapio(String nomeCardapio) {
+        this.nomeCardapio = nomeCardapio;
     }
 
     public String getDataAtualizacao() {
         return dataAtualizacao;
     }
+    public void setDataAtualizacao(String dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
 
     //---------
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
