@@ -1,6 +1,8 @@
 package br.com.fooddelivery.tialudeliveryback.entity;
 
+import br.com.fooddelivery.tialudeliveryback.dto.CategoriaDTO;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
@@ -19,6 +21,13 @@ public class CategoriaEntity {
     //produto fk
 
     //-------
+
+    public CategoriaEntity(CategoriaDTO categoria) {
+        BeanUtils.copyProperties(categoria, this);
+    }
+    public CategoriaEntity() {}
+
+    //-----------
 
     public Long getId() {
         return id;
