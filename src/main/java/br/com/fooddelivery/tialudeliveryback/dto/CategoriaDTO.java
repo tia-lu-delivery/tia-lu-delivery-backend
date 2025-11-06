@@ -12,6 +12,8 @@ public class CategoriaDTO {
 
     private int ordem;
 
+    private Boolean disponivel;
+
     private CardapioDTO cardapio;
 
     private List<ProdutoDTO> produtos;
@@ -58,6 +60,13 @@ public class CategoriaDTO {
     }
     public void setProdutos(List<ProdutoDTO> produtos) {
         this.produtos = produtos;
+    }
+
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
+    public void setDisponivel(Boolean disponivel) {
+        this.disponivel = disponivel;
     }
 
 }

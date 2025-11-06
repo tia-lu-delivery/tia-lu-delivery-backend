@@ -19,6 +19,8 @@ public class CategoriaEntity {
 
     private Integer ordem;
 
+    private Boolean disponivel;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cardapio_id", nullable = false)
     private CardapioEntity cardapio;
@@ -68,6 +70,13 @@ public class CategoriaEntity {
     }
     public void setProdutos(List<ProdutoEntity> produtos) {
         this.produtos = produtos;
+    }
+
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
+    public void setDisponivel(Boolean disponivel) {
+        this.disponivel = disponivel;
     }
 
     //-------------
