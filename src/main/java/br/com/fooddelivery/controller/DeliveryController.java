@@ -33,7 +33,7 @@ public class DeliveryController {
     public ResponseEntity<Delivery> createDelivery(@RequestBody Delivery delivery) {
         delivery.setId(idGenerator.incrementAndGet());
         if (delivery.getStatus() == null) {
-            delivery.setStatus("PENDING");
+            delivery.setStatus("pendente");
         }
         deliveries.put(delivery.getId(), delivery);
         
