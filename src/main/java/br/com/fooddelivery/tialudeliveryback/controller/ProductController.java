@@ -37,8 +37,8 @@ public class ProductController {
      */
     @PutMapping(value = "/merchant/{id_estabelecimento}/products/{id_produto}/enable", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> enableProduct(
-            @PathVariable("id_estabelecimento") String merchantId,
-            @PathVariable("id_produto") String productId) {
+        @PathVariable("id_estabelecimento") String merchantId,
+        @PathVariable("id_produto") String productId) {
 
         ProductEnableResponse result = productService.enableProduct(merchantId, productId);
         return ResponseEntity.ok(result);

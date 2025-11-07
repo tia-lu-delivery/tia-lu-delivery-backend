@@ -20,6 +20,7 @@ import br.com.fooddelivery.tialudeliveryback.dto.ProductEnableResponse;
 import br.com.fooddelivery.tialudeliveryback.service.ProductService;
 import br.com.fooddelivery.tialudeliveryback.exception.ProductNotFoundException;
 import org.mockito.Mockito;
+import br.com.fooddelivery.tialudeliveryback.security.XMerchantIdFilter;
 
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
@@ -42,7 +43,7 @@ class ProductControllerTest {
                         .build()
         );
 
-        mockMvc.perform(put("/api/v1/merchant/R1001/products/P501/enable"))
+    mockMvc.perform(put("/api/v1/merchant/R1001/products/P501/enable").header("X-Merchant-Id", "R1001"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id_produto").value("P501"))
@@ -55,7 +56,7 @@ class ProductControllerTest {
     void enableProduct_returns404WithErrorEnvelope() throws Exception {
         when(productService.enableProduct("R404", "PX")).thenThrow(new ProductNotFoundException("PX", "R404"));
 
-        mockMvc.perform(put("/api/v1/merchant/R404/products/PX/enable"))
+    mockMvc.perform(put("/api/v1/merchant/R404/products/PX/enable").header("X-Merchant-Id", "R404"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.erro.codigo").value("PRODUTO_NAO_ENCONTRADO"))
@@ -67,6 +68,10 @@ class ProductControllerTest {
         @Primary
         ProductService productService() {
             return Mockito.mock(ProductService.class);
+        }
+        @Bean
+        XMerchantIdFilter xMerchantIdFilter() {
+            return new XMerchantIdFilter();
         }
     }
 }

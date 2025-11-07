@@ -10,21 +10,28 @@ import org.springframework.web.server.ResponseStatusException;
 import br.com.fooddelivery.tialudeliveryback.dto.ErrorEnvelope;
 import br.com.fooddelivery.tialudeliveryback.exception.ProductNotFoundException;
 import br.com.fooddelivery.tialudeliveryback.exception.UnauthorizedException;
+import br.com.fooddelivery.tialudeliveryback.exception.ErrorCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(ProductNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorEnvelope handleProductNotFound(ProductNotFoundException ex) {
-        return ErrorEnvelope.of("PRODUTO_NAO_ENCONTRADO", ex.getMessage());
+        log.info("Produto não encontrado: {}", ex.getMessage());
+        return ErrorEnvelope.of(ErrorCode.PRODUTO_NAO_ENCONTRADO.toString(), ex.getMessage());
     }
 
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorEnvelope handleUnauthorized(UnauthorizedException ex) {
         String detalhe = ex.getMessage() != null ? ex.getMessage() : "Acesso não autorizado.";
-        return ErrorEnvelope.of("NAO_AUTORIZADO", detalhe);
+        log.info("Acesso não autorizado: {}", detalhe);
+        return ErrorEnvelope.of(ErrorCode.NAO_AUTORIZADO.toString(), detalhe);
     }
 
     @ExceptionHandler(ResponseStatusException.class)
@@ -34,11 +41,13 @@ public class GlobalExceptionHandler {
 
         String codigo;
         switch (status) {
-            case NOT_FOUND -> codigo = "RECURSO_NAO_ENCONTRADO";
-            case UNAUTHORIZED -> codigo = "NAO_AUTORIZADO";
-            default -> codigo = "ERRO";
+            case NOT_FOUND -> codigo = ErrorCode.RECURSO_NAO_ENCONTRADO.toString();
+            case UNAUTHORIZED -> codigo = ErrorCode.NAO_AUTORIZADO.toString();
+            default -> codigo = ErrorCode.ERRO.toString();
         }
+        String detalhe = ex.getReason() != null ? ex.getReason() : "";
+        log.warn("ResponseStatusException: status={} reason={}", status, detalhe);
         return ResponseEntity.status(status)
-                .body(ErrorEnvelope.of(codigo, ex.getReason() != null ? ex.getReason() : ""));
+                .body(ErrorEnvelope.of(codigo, detalhe));
     }
 }
