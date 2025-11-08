@@ -25,8 +25,6 @@ public class CardapioEntity {
 
     private String dataAtualizacao;
 
-    private String mensagem;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estabelecimento_id", referencedColumnName = "id")
     private EstabelecimentoEntity estabelecimento;
