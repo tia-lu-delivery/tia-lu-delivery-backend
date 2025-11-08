@@ -19,9 +19,14 @@ public class ProductService {
         this.mapper = mapper;
     }
 
-    public ProductResponseDTO getProductDetails(Long idProduto) {
-        Product product = repository.findById(idProduto)
-                .orElseThrow(() -> new NoSuchElementException("Produto com ID " + idProduto + " não encontrado."));
+    public ProductResponseDTO getProductDetails(Long idRestaurante, Long idProduto) {
+        Product product = repository
+                .findByRestaurantIdAndProductId(idRestaurante, idProduto)
+                .orElseThrow(() -> new NoSuchElementException(
+                        String.format("O produto '%d' não foi encontrado no cardápio do restaurante '%d'.",
+                                idProduto, idRestaurante)
+                ));
+
         return mapper.toDTO(product);
     }
 }
