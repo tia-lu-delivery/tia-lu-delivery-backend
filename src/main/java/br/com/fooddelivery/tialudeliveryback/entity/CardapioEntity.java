@@ -18,7 +18,7 @@ public class CardapioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String nomeCardapio;
@@ -27,11 +27,8 @@ public class CardapioEntity {
 
     private String mensagem;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estabelecimento_id", referencedColumnName = "id")
     private EstabelecimentoEntity estabelecimento;
-
-    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.ALL)
-    private List<CategoriaEntity> categorias;
 
 }
