@@ -1,13 +1,17 @@
 package br.com.fooddelivery.tialudeliveryback.entity;
 
-import br.com.fooddelivery.tialudeliveryback.dto.ProdutoDTO;
 import jakarta.persistence.*;
-import org.springframework.beans.BeanUtils;
-
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "PRODUTO")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProdutoEntity {
 
     @Id
@@ -31,87 +35,5 @@ public class ProdutoEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id", nullable = false)
     private CategoriaEntity categoria;
-
-    //-------=--
-
-    public ProdutoEntity(ProdutoDTO produto) {
-        BeanUtils.copyProperties(produto, this);
-    }
-    public ProdutoEntity() {}
-
-    //----------------------------
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNomeProduto() {
-        return nomeProduto;
-    }
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Double getPrecoUnitario() {
-        return precoUnitario;
-    }
-    public void setPrecoUnitario(Double precoUnitario) {
-        this.precoUnitario = precoUnitario;
-    }
-
-    public String getImagemUrl() {
-        return imagemUrl;
-    }
-    public void setImagemUrl(String imagemUrl) {
-        this.imagemUrl = imagemUrl;
-    }
-
-    public Boolean getDisponivel() {
-        return disponivel;
-    }
-    public void setDisponivel(Boolean disponivel) {
-        this.disponivel = disponivel;
-    }
-
-    public Integer getEstoque() {
-        return estoque;
-    }
-    public void setEstoque(Integer estoque) {
-        this.estoque = estoque;
-    }
-
-    public CategoriaEntity getCategoria() {
-        return categoria;
-    }
-    public void setCategoria(CategoriaEntity categoria) {
-        this.categoria = categoria;
-    }
-
-    //---------
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-
-        ProdutoEntity other = (ProdutoEntity) obj;
-        return Objects.equals(id, other.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
 }
