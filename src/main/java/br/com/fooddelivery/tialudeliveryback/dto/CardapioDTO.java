@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CardapioDTO {
 
-    private Long id;
+    private String idCardapio;
 
     private String nomeCardapio;
 
