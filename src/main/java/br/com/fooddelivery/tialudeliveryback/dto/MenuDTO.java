@@ -40,4 +40,10 @@ public class MenuDTO {
         private Integer estoque;
     }
 
+    public static class EstabelecimentoDTO {
+
+        private String idEstabelecimento;
+        private String nomeFantasia;
+    }
+
 }
