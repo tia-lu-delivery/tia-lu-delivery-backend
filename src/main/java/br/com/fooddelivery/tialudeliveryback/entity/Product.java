@@ -21,17 +21,25 @@ public class Product {
     private String description;
 
     @Column(nullable = false)
+    private Integer stockQuantity = 0;
+
+    @Column
+    private String imageUrl;
+
+    @Column(nullable = false)
     private Boolean active = true;
 
     public Product() {}
 
-    public Product(String name, BigDecimal price, String description) {
+    public Product(String name, BigDecimal price, String description, Integer stockQuantity, String imageUrl) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.stockQuantity = stockQuantity;
+        this.imageUrl = imageUrl;
+        this.active = stockQuantity != null && stockQuantity > 0;
     }
 
-    // Getters e Setters
     public Long getId() { return id; }
 
     public String getName() { return name; }
@@ -42,6 +50,15 @@ public class Product {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public Integer getStockQuantity() { return stockQuantity; }
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+        this.active = stockQuantity != null && stockQuantity > 0;
+    }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
