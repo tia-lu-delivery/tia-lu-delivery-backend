@@ -24,5 +24,5 @@ public class OwnerPartner {
     private String nomeCompleto;
     private String email;
     private String telefone;
-
+    private String idEstabelecimento;
 }
