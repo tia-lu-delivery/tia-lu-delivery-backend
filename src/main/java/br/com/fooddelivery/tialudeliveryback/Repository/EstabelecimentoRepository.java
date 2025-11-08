@@ -1,6 +1,6 @@
-package Repository;
+package br.com.fooddelivery.tialudeliveryback.Repository;
 
-import Entity.Estabelecimento;
+import br.com.fooddelivery.tialudeliveryback.Entity.Estabelecimento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package Entity;
+package br.com.fooddelivery.tialudeliveryback.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
