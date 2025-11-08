@@ -29,14 +29,20 @@ public class Product {
     @Column(nullable = false)
     private Boolean active = true;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
+
     public Product() {}
 
-    public Product(String name, BigDecimal price, String description, Integer stockQuantity, String imageUrl) {
+    public Product(String name, BigDecimal price, String description,
+                   Integer stockQuantity, String imageUrl, Restaurant restaurant) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.stockQuantity = stockQuantity;
         this.imageUrl = imageUrl;
+        this.restaurant = restaurant;
         this.active = stockQuantity != null && stockQuantity > 0;
     }
 
@@ -62,4 +68,7 @@ public class Product {
 
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
+
+    public Restaurant getRestaurant() { return restaurant; }
+    public void setRestaurant(Restaurant restaurant) { this.restaurant = restaurant; }
 }
