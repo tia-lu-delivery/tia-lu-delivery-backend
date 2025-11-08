@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProdutoDTO {
 
-    private Long id;
+    private String idProduto;
 
     private String nomeProduto;
 
