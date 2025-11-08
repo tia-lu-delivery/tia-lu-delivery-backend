@@ -16,24 +16,32 @@ public class ProdutoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String nomeProduto;
 
-    @Lob
+    @Column(length = 1000)
     private String descricao;
 
+    @Column(nullable = false)
     private Double precoUnitario;
 
+    @Column
     private String imagemUrl;
 
-    private Boolean disponivel;
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean disponivel = true;
 
+    @Column
     private Integer estoque;
 
+    @Column
+    private Integer ordem;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_id", nullable = false)
+    @JoinColumn(name = "id_categoria", nullable = false)
     private CategoriaEntity categoria;
 
 }

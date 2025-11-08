@@ -16,9 +16,12 @@ public class EstabelecimentoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String nomeFantasia;
+
+    @Column(nullable = false)
+    private boolean ativo;
 
 }
