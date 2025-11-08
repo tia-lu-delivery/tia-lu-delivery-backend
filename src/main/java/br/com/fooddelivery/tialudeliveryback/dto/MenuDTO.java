@@ -20,4 +20,13 @@ public class MenuDTO {
     private List<CategoriaDTO> categorias;
     private String mensagem;
 
+    public static class CategoriaDTO {
+
+        private String idCategoria;
+        private String nomeCategoria;
+        private int ordem;
+        private Boolean disponivel;
+        private List<ProdutoDTO> produtos;
+    }
+
 }
