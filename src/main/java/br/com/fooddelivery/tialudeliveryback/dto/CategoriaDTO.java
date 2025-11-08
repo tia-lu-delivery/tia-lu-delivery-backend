@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoriaDTO {
 
-    private Long id;
+    private String idCategoria;
 
     private String nomeCategoria;
 
