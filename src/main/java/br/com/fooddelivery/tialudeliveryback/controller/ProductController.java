@@ -1,13 +1,14 @@
 package br.com.fooddelivery.tialudeliveryback.controller;
 
-import br.com.fooddelivery.tialudeliveryback.entity.Product;
+import br.com.fooddelivery.tialudeliveryback.dto.ProductResponseDTO;
 import br.com.fooddelivery.tialudeliveryback.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/merchant")
 @CrossOrigin(origins = "*")
 public class ProductController {
 
@@ -17,32 +18,30 @@ public class ProductController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Product> getAll() {
-        return service.findAll();
-    }
+    @GetMapping("/{id_restaurante}/products/{id_produto}")
+    public ResponseEntity<?> getProductDetails(
+            @PathVariable String id_restaurante,
+            @PathVariable String id_produto) {
+        try {
+            ProductResponseDTO produto = service.getProductDetails(id_restaurante, id_produto);
+            return ResponseEntity.ok(produto);
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getById(@PathVariable Long id) {
-        Product product = service.findById(id);
-        return ResponseEntity.ok(product);
-    }
-
-    @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product) {
-        Product newProduct = service.save(product);
-        return ResponseEntity.ok(newProduct);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product product) {
-        Product updated = service.update(id, product);
-        return ResponseEntity.ok(updated);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("restaurante")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                    "erro", Map.of(
+                        "codigo", "RESTAURANTE_NAO_ENCONTRADO",
+                        "detalhe", e.getMessage()
+                    )
+                ));
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                "erro", Map.of(
+                    "codigo", "PRODUTO_NAO_ENCONTRADO",
+                    "detalhe", e.getMessage()
+                )
+            ));
+        }
     }
 }
+
