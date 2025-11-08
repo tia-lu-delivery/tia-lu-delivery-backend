@@ -29,4 +29,15 @@ public class MenuDTO {
         private List<ProdutoDTO> produtos;
     }
 
+    public static class ProdutoDTO {
+
+        private String idProduto;
+        private String nomeProduto;
+        private String descricao;
+        private Double precoUnitario;
+        private String imagemUrl;
+        private Boolean disponivel;
+        private Integer estoque;
+    }
+
 }
