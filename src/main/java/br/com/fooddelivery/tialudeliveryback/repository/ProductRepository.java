@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // Filtro simples: busca produtos pelo nome (parcial, ignorando maiúsculas/minúsculas)
+    // Busca produtos pelo nome (parcial, ignorando maiúsculas/minúsculas)
     @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Product> findByNameContainingIgnoreCase(String name);
 }
