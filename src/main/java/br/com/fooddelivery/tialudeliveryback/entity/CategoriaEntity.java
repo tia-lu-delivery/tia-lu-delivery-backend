@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Table(name = "CATEGORIA")
 @Data
@@ -18,20 +16,20 @@ public class CategoriaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String nomeCategoria;
 
+    @Column
     private Integer ordem;
 
-    private Boolean disponivel;
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean disponivel = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cardapio_id", nullable = false)
+    @JoinColumn(name = "id_cardapio", nullable = false)
     private CardapioEntity cardapio;
-
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-    private List<ProdutoEntity> produtos;
 
 }
