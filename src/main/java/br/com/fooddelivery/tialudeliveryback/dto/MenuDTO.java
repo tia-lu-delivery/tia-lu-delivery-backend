@@ -20,6 +20,10 @@ public class MenuDTO {
     private List<CategoriaDTO> categorias;
     private String mensagem;
 
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class CategoriaDTO {
 
         private String idCategoria;
@@ -29,6 +33,10 @@ public class MenuDTO {
         private List<ProdutoDTO> produtos;
     }
 
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class ProdutoDTO {
 
         private String idProduto;
@@ -40,6 +48,10 @@ public class MenuDTO {
         private Integer estoque;
     }
 
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class EstabelecimentoDTO {
 
         private String idEstabelecimento;
