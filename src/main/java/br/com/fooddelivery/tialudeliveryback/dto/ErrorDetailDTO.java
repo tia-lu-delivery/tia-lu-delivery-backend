@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorResponseDTO {
-    private String codigoErro;
-    private String mensagem;
-    private java.util.List<ErrorDetailDTO> detalhes;
+public class ErrorDetailDTO{
+    private String campo;
+    private String erro;
 }
