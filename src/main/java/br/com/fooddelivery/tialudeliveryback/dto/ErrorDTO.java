@@ -10,4 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorDTO {
+
+    private String codigoErro;
+
+    private String mensagem;
+
 }
