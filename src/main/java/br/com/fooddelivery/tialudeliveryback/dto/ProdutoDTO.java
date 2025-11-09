@@ -33,6 +33,40 @@ public class ProdutoDTO {
 
     public void setIdProduto(String idProduto) {
         this.idProduto = idProduto;
+import org.springframework.beans.BeanUtils;
+
+public class ProdutoDTO {
+
+    private Long id;
+
+    private String nomeProduto;
+
+    private String descricao;
+
+    private Double precoUnitario;
+
+    private String imagemUrl;
+
+    private Boolean disponivel;
+
+    private Integer estoque;
+
+    private CategoriaDTO categoria;
+
+    //--------------------------------
+
+    public ProdutoDTO(ProdutoDTO produto) {
+        BeanUtils.copyProperties(produto, this);
+    }
+    public ProdutoDTO() {}
+
+    //-----------------------------
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNomeProduto() {
@@ -82,4 +116,15 @@ public class ProdutoDTO {
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
 }
+    public void setEstoque(Integer estoque) {
+        this.estoque = estoque;
+    }
+
+    public CategoriaDTO getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(CategoriaDTO categoria) {
+        this.categoria = categoria;
+    }
+
 }

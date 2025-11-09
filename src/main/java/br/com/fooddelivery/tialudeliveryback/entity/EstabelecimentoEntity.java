@@ -26,6 +26,7 @@ public class EstabelecimentoEntity {
 
     // Construtores
     public EstabelecimentoEntity() {}
+    //-------------------------
 
     public EstabelecimentoEntity(EstabelecimentoDTO estabelecimento) {
         BeanUtils.copyProperties(estabelecimento, this);
@@ -36,6 +37,13 @@ public class EstabelecimentoEntity {
         return id;
     }
 
+    public EstabelecimentoEntity() {}
+
+    //-------
+
+    public Long getId() {
+        return id;
+    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -44,6 +52,9 @@ public class EstabelecimentoEntity {
         return nomeFantasia;
     }
 
+    public String  getNomeFantasia() {
+        return nomeFantasia;
+    }
     public void setNomeFantasia(String nomeFantasia) {
         this.nomeFantasia = nomeFantasia;
     }
@@ -70,10 +81,22 @@ public class EstabelecimentoEntity {
         if (this == o) return true;
         if (!(o instanceof EstabelecimentoEntity that)) return false;
         return Objects.equals(id, that.id);
+    //-----------------------
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+
+        EstabelecimentoEntity other = (EstabelecimentoEntity) obj;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
 }
+}
+    }
 }

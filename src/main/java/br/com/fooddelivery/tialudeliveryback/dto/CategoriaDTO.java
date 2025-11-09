@@ -1,5 +1,7 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
+import org.springframework.beans.BeanUtils;
+
 import java.util.List;
 
 public class CategoriaDTO {
@@ -30,6 +32,30 @@ public class CategoriaDTO {
 
     public void setIdCategoria(String idCategoria) {
         this.idCategoria = idCategoria;
+    private Long id;
+
+    private String nomeCategoria;
+
+    private int ordem;
+
+    private CardapioDTO cardapio;
+
+    private List<ProdutoDTO> produtos;
+
+    //-------------
+
+    public CategoriaDTO(CategoriaDTO categoria) {
+        BeanUtils.copyProperties(categoria, this);
+    }
+    public CategoriaDTO() {}
+
+    //-----------
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNomeCategoria() {
@@ -54,6 +80,11 @@ public class CategoriaDTO {
 
     public void setDisponivel(Boolean disponivel) {
         this.disponivel = disponivel;
+    public CardapioDTO getCardapio() {
+        return cardapio;
+    }
+    public void setCardapio(CardapioDTO cardapio) {
+        this.cardapio = cardapio;
     }
 
     public List<ProdutoDTO> getProdutos() {
@@ -63,4 +94,8 @@ public class CategoriaDTO {
     public void setProdutos(List<ProdutoDTO> produtos) {
         this.produtos = produtos;
 }
+    public void setProdutos(List<ProdutoDTO> produtos) {
+        this.produtos = produtos;
+    }
+
 }

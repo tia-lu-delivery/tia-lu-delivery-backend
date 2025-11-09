@@ -29,6 +29,14 @@ public class CardapioEntity {
 
     // Construtores
     public CardapioEntity() {}
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "estabelecimento_id", referencedColumnName = "id")
+    private EstabelecimentoEntity estabelecimento;
+
+    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.ALL)
+    private List<CategoriaEntity> categorias;
+
+    //---------------------------
 
     public CardapioEntity(CardapioDTO cardapio) {
         BeanUtils.copyProperties(cardapio, this);
@@ -39,6 +47,13 @@ public class CardapioEntity {
         return id;
     }
 
+    public CardapioEntity() {}
+
+    //-------------------------------
+
+    public Long getId() {
+        return id;
+    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -81,10 +96,23 @@ public class CardapioEntity {
         if (this == o) return true;
         if (!(o instanceof CardapioEntity that)) return false;
         return Objects.equals(id, that.id);
+    //---------
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+
+        CardapioEntity other = (CardapioEntity) obj;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
 }
+}
+    }
+
 }

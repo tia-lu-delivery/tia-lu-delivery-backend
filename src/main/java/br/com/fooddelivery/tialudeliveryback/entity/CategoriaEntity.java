@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "CATEGORIA")
@@ -32,6 +34,10 @@ public class CategoriaEntity {
 
     // Construtores
     public CategoriaEntity() {}
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<ProdutoEntity> produtos;
+
+    //-------
 
     public CategoriaEntity(CategoriaDTO categoria) {
         BeanUtils.copyProperties(categoria, this);
@@ -42,6 +48,13 @@ public class CategoriaEntity {
         return id;
     }
 
+    public CategoriaEntity() {}
+
+    //-----------
+
+    public Long getId() {
+        return id;
+    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -74,6 +87,9 @@ public class CategoriaEntity {
         return cardapio;
     }
 
+    public CardapioEntity getCardapio() {
+        return cardapio;
+    }
     public void setCardapio(CardapioEntity cardapio) {
         this.cardapio = cardapio;
     }
@@ -92,10 +108,22 @@ public class CategoriaEntity {
         if (this == o) return true;
         if (!(o instanceof CategoriaEntity that)) return false;
         return Objects.equals(id, that.id);
+    //-------------
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+
+        CategoriaEntity other = (CategoriaEntity) obj;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
 }
+}
+    }
 }
