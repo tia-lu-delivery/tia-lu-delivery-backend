@@ -4,5 +4,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface MerchantService {
-    boolean existsById(String idEstabelecimento);
+    boolean existsByIdEstabelecimento(String idEstabelecimento);
 }

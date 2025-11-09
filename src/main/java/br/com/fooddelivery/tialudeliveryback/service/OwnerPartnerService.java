@@ -48,7 +48,7 @@ public class OwnerPartnerService {
     }
 
     private void validateMerchantExists(String idEstabelecimento) {
-        if (!merchantService.existsById(idEstabelecimento)) {
+        if (!merchantService.existsByIdEstabelecimento(idEstabelecimento)) {
             log.error("Estabelecimento não encontrado: {}", idEstabelecimento);
             throw new ResourceNotFoundException(
                     "O estabelecimento com ID '" + idEstabelecimento + "' não foi encontrado."
