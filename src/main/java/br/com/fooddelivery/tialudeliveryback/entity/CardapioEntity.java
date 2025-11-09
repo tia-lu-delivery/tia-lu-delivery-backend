@@ -20,6 +20,15 @@ public class CardapioEntity {
 
     private String dataAtualizacao;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estabelecimento_id", nullable = false)
+    private EstabelecimentoEntity estabelecimento;
+
+    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CategoriaEntity> categorias;
+
+    // Construtores
+    public CardapioEntity() {}
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "estabelecimento_id", referencedColumnName = "id")
     private EstabelecimentoEntity estabelecimento;
@@ -32,6 +41,12 @@ public class CardapioEntity {
     public CardapioEntity(CardapioDTO cardapio) {
         BeanUtils.copyProperties(cardapio, this);
     }
+
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
     public CardapioEntity() {}
 
     //-------------------------------
@@ -46,6 +61,7 @@ public class CardapioEntity {
     public String getNomeCardapio() {
         return nomeCardapio;
     }
+
     public void setNomeCardapio(String nomeCardapio) {
         this.nomeCardapio = nomeCardapio;
     }
@@ -53,6 +69,7 @@ public class CardapioEntity {
     public String getDataAtualizacao() {
         return dataAtualizacao;
     }
+
     public void setDataAtualizacao(String dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
@@ -60,6 +77,7 @@ public class CardapioEntity {
     public EstabelecimentoEntity getEstabelecimento() {
         return estabelecimento;
     }
+
     public void setEstabelecimento(EstabelecimentoEntity estabelecimento) {
         this.estabelecimento = estabelecimento;
     }
@@ -67,10 +85,17 @@ public class CardapioEntity {
     public List<CategoriaEntity> getCategorias() {
         return categorias;
     }
+
     public void setCategorias(List<CategoriaEntity> categorias) {
         this.categorias = categorias;
     }
 
+    // equals e hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CardapioEntity that)) return false;
+        return Objects.equals(id, that.id);
     //---------
 
     @Override
@@ -86,6 +111,8 @@ public class CardapioEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+}
+}
     }
 
 }

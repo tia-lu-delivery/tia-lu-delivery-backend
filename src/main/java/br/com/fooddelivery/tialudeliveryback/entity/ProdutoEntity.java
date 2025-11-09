@@ -20,9 +20,17 @@ public class ProdutoEntity {
     @Lob
     private String descricao;
 
+    @Column(nullable = false)
     private Double precoUnitario;
 
     private String imagemUrl;
+
+    @Column(nullable = false)
+    private Boolean disponivel = true;
+
+    private Integer estoque;
+
+    private Integer ordem;
 
     private Boolean disponivel;
 
@@ -32,11 +40,19 @@ public class ProdutoEntity {
     @JoinColumn(name = "categoria_id", nullable = false)
     private CategoriaEntity categoria;
 
+    // Construtores
+    public ProdutoEntity() {}
     //-------=--
 
     public ProdutoEntity(ProdutoDTO produto) {
         BeanUtils.copyProperties(produto, this);
     }
+
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
     public ProdutoEntity() {}
 
     //----------------------------
@@ -51,6 +67,7 @@ public class ProdutoEntity {
     public String getNomeProduto() {
         return nomeProduto;
     }
+
     public void setNomeProduto(String nomeProduto) {
         this.nomeProduto = nomeProduto;
     }
@@ -58,6 +75,7 @@ public class ProdutoEntity {
     public String getDescricao() {
         return descricao;
     }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -65,6 +83,7 @@ public class ProdutoEntity {
     public Double getPrecoUnitario() {
         return precoUnitario;
     }
+
     public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
     }
@@ -72,6 +91,7 @@ public class ProdutoEntity {
     public String getImagemUrl() {
         return imagemUrl;
     }
+
     public void setImagemUrl(String imagemUrl) {
         this.imagemUrl = imagemUrl;
     }
@@ -79,6 +99,7 @@ public class ProdutoEntity {
     public Boolean getDisponivel() {
         return disponivel;
     }
+
     public void setDisponivel(Boolean disponivel) {
         this.disponivel = disponivel;
     }
@@ -86,8 +107,21 @@ public class ProdutoEntity {
     public Integer getEstoque() {
         return estoque;
     }
+
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
+    }
+
+    public Integer getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(Integer ordem) {
+        this.ordem = ordem;
+    }
+
+    public CategoriaEntity getCategoria() {
+        return categoria;
     }
 
     public CategoriaEntity getCategoria() {
@@ -97,6 +131,12 @@ public class ProdutoEntity {
         this.categoria = categoria;
     }
 
+    // equals e hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProdutoEntity that)) return false;
+        return Objects.equals(id, that.id);
     //---------
 
     @Override
@@ -112,6 +152,8 @@ public class ProdutoEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+}
+}
     }
 
 }
