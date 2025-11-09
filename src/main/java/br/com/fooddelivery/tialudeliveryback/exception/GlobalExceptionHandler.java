@@ -15,14 +15,14 @@ import java.util.List;
 
 @RestControllerAdvice
 @Slf4j
-public class Exception {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDTO> handleValidationException(MethodArgumentNotValidException ex) {
         log.error("Erro de validação: {}", ex.getMessage());
 
         List<ErrorDetailDTO> detalhes = new ArrayList<>();
-        
+
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             detalhes.add(ErrorDetailDTO.builder()
                     .campo(error.getField())
@@ -65,7 +65,7 @@ public class Exception {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    @ExceptionHandler(Throwable.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGenericException(Exception ex) {
         log.error("Erro interno do servidor: ", ex);
 
