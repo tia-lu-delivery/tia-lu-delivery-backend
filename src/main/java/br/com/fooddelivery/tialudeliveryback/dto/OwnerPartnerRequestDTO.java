@@ -14,22 +14,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OwnerPartnerRequestDTO {
 
-    private Stringcpf;
     @NotBlank(message = "CPF não pode ser nulo ou vazio.")
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter exatamente 11 dígitos.")
     private String cpf;
 
-    private Stringrg;
     @NotBlank(message = "RG não pode ser nulo ou vazio.")
     private String rg;
 
-    private StringOrgaoEmissorRg;
-
-    private StringEmail;
-
-    private StringTelefone;
-
-    private StringNomeCompleto;
     @NotBlank(message = "Órgão emissor do RG não pode ser nulo ou vazio.")
     private String orgaoEmissorRg;
 
