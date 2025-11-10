@@ -53,12 +53,10 @@ public class PedidoService {
 
         System.out.println("Iniciando registro de pedido...");
 
-        // Usuário fixo de simulação (ID 1 vem do data.sql)
         Usuario usuarioLogado = usuarioRepository.findById(1L)
                 .orElseThrow(() -> new ValidacaoPedidoException(
                         "Usuário de simulação (ID 1) não encontrado no data.sql."));
 
-        // CA 1.3 — validação de endereço usando findByIdAndUsuarioId
         Endereco endereco = enderecoRepository
                 .findByIdAndUsuarioId(request.getIdEnderecoEntrega(), usuarioLogado.getId())
                 .orElseThrow(() -> new ValidacaoPedidoException(
@@ -67,12 +65,10 @@ public class PedidoService {
 
         System.out.println("CA 1.3: Endereço validado com sucesso.");
 
-        // Busca o estabelecimento do pedido
         Estabelecimento estabelecimento = estabelecimentoRepository.findById(request.getIdEstabelecimento())
                 .orElseThrow(() -> new ValidacaoPedidoException(
                         "Estabelecimento com ID " + request.getIdEstabelecimento() + " não encontrado."));
 
-        // CA 1.4 — Cobertura de entrega
         System.out.println("CA 1.4: Validando cobertura de entrega...");
 
         String cepDoEndereco = endereco.getCep();
@@ -89,13 +85,11 @@ public class PedidoService {
 
         System.out.println("CA 1.4: Cobertura de entrega validada.");
 
-        // CA 1.5, 1.7 e 1.6 — validação dos itens e cálculo do subtotal
         System.out.println("CA 1.5, 1.7 e 1.6 (Cálculo): Validando itens, estoque, e calculando subtotal...");
 
         BigDecimal subtotalCalculado = BigDecimal.ZERO;
         Map<Long, Produto> produtosValidados = new HashMap<>();
 
-        // 🔁 AQUI já usamos request.getItens()
         for (ItemRequestDTO itemDTO : request.getItens()) {
 
             Produto produto = produtoRepository.findById(itemDTO.getIdProduto())
@@ -125,10 +119,8 @@ public class PedidoService {
 
         System.out.println("CA 1.6: Validando preço total (anti-fraude)...");
 
-        // Taxa de entrega fixa
         BigDecimal taxaEntrega = new BigDecimal("5.00");
 
-        // 💸 Novo modelo de desconto: request.getDesconto().getValorDesconto()
         BigDecimal desconto = BigDecimal.ZERO;
         if (request.getDesconto() != null && request.getDesconto().getValorDesconto() != null) {
             desconto = request.getDesconto().getValorDesconto();
@@ -162,7 +154,6 @@ public class PedidoService {
 
         Pedido pedidoSalvo = pedidoRepository.save(novoPedido);
 
-        // 🔁 Aqui também usamos request.getItens()
         for (ItemRequestDTO itemDTO : request.getItens()) {
             Produto produto = produtosValidados.get(itemDTO.getIdProduto());
 
