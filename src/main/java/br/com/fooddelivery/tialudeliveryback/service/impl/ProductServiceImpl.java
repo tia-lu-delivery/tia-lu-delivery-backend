@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.fooddelivery.tialudeliveryback.domain.Product;
 import br.com.fooddelivery.tialudeliveryback.dto.ProductEnableResponse;
 import br.com.fooddelivery.tialudeliveryback.exception.ProductNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import br.com.fooddelivery.tialudeliveryback.mapper.ProductMapper;
 import br.com.fooddelivery.tialudeliveryback.repository.ProductRepository;
 import br.com.fooddelivery.tialudeliveryback.service.ProductService;
@@ -13,6 +15,8 @@ import br.com.fooddelivery.tialudeliveryback.service.ProductService;
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
+
+    private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     private final ProductRepository productRepository;
 
@@ -22,7 +26,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEnableResponse enableProduct(String merchantId, String productId) {
-        // TODO (CA-002): validar autenticação/permissão quando segurança estiver configurada
+        // Validação provisória de autorização é feita por um filtro (XMerchantIdFilter).
+        log.debug("Habilitando produto {} para estabelecimento {}", productId, merchantId);
 
     Product product = productRepository.findByMerchantIdAndId(merchantId, productId)
         .orElseThrow(() -> new ProductNotFoundException(productId, merchantId));
@@ -32,9 +37,12 @@ public class ProductServiceImpl implements ProductService {
             product.setDisponivel(true);
             productRepository.save(product);
             changed = true;
+            log.info("Produto {} reativado para merchant {}", productId, merchantId);
         }
 
         // Use mapper overload to include whether the state changed during this operation
-        return ProductMapper.toEnableResponse(product, product.isDisponivel(), changed);
+        ProductEnableResponse resp = ProductMapper.toEnableResponse(product, product.isDisponivel(), changed);
+        log.debug("Resposta enableProduct: {}", resp);
+        return resp;
     }
 }
