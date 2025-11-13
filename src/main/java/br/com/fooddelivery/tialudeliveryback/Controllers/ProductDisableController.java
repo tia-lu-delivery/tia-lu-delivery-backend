@@ -27,7 +27,6 @@ public class ProductDisableController {
      * @return HTTP 200 se a operação for bem-sucedida
      */
     @PutMapping("/{id_produto}/disable")
-    // ✅ CORRIGIDO: Tipo de retorno do método
     public ResponseEntity<ProdutoInativadoRes> disableProduct(
             @PathVariable("id_estabelecimento") Long idEstabelecimento,
             @PathVariable("id_produto") Long idProduto ){
