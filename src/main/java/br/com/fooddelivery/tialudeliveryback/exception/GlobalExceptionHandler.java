@@ -2,6 +2,7 @@ package br.com.fooddelivery.tialudeliveryback.exception;
 
 import br.com.fooddelivery.tialudeliveryback.dto.ErrorDetailDTO;
 import br.com.fooddelivery.tialudeliveryback.dto.ErrorResponseDTO;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +59,19 @@ public class GlobalExceptionHandler {
 
         ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
                 .codigoErro("BUSINESS_ERROR")
+                .mensagem(ex.getMessage())
+                .detalhes(null)
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponseDTO> handleJsonParseException(HttpMessageNotReadableException ex) {
+        log.error("Erro na requisição: {}", ex.getMessage());
+
+        ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
+                .codigoErro("JSON_FORMAT_ERROR")
                 .mensagem(ex.getMessage())
                 .detalhes(null)
                 .build();
