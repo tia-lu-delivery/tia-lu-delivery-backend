@@ -1,6 +1,7 @@
-package br.com.fooddelivery.tialudeliveryback.Controllers;
+package br.com.fooddelivery.tialudeliveryback.controllers;
 
 import br.com.fooddelivery.tialudeliveryback.Service.ProductDisableService;
+import br.com.fooddelivery.tialudeliveryback.dto.ProdutoInativadoRes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,15 +27,15 @@ public class ProductDisableController {
      * @return HTTP 200 se a operação for bem-sucedida
      */
     @PutMapping("/{id_produto}/disable")
-    public ResponseEntity<ProductDisableResponseDTO> disableProduct(
+    // ✅ CORRIGIDO: Tipo de retorno do método
+    public ResponseEntity<ProdutoInativadoRes> disableProduct(
             @PathVariable("id_estabelecimento") Long idEstabelecimento,
             @PathVariable("id_produto") Long idProduto ){
 
-        // Se produto/estabelecimento não existe, o Service lança uma exceção aqui.
-        ProductDisableResponseDTO responseDTO = productDisableService.disableProduct(idEstabelecimento, idProduto);
+        // Se produto/estabelecimento não existe, o Service lança uma exceção aqui
+        ProdutoInativadoRes responseDTO = productDisableService.disableProduct(idEstabelecimento, idProduto);
 
         // Retorna o status 200 (OK) caso ocorra tudo certo
         return ResponseEntity.ok(responseDTO);
     }
-
 }
