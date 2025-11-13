@@ -1,7 +1,18 @@
-package com.fooddelivery.domain.pagamento.entity;
+package br.com.fooddelivery.tialudeliveryback.entity;
 
 public enum StatusPagamento {
-    APROVADO,   // Se o pagamento for bem-sucedido (CA 1.1)
-    REJEITADO,  // Se o pagamento for recusado pelo banco (CA 1.5)
-    ERRO        // Para falhas internas, como erro de envio (CA 1.6)
+    APROVADO("Pagamento Aprovado"),
+    REJEITADO("Pagamento Rejeitado"),
+    ERRO("Erro de Processamento");
+
+    private final String descricao;
+
+    StatusPagamento(String descricao) {
+        this.descricao = descricao;
+    }
+
+
+    public String getDescricao() {
+        return descricao;
+    }
 }
