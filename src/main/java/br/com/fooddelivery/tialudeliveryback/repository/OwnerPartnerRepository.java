@@ -12,6 +12,5 @@ import br.com.fooddelivery.tialudeliveryback.models.OwnerPartner;
 public interface OwnerPartnerRepository extends JpaRepository <OwnerPartner, UUID> {
     boolean existsByCpf (String cpf);
     Optional <OwnerPartner> findByCpf (String cpf);
-    boolean existsByIdEstabelecimento (String idEstabelecimento);
     Optional <OwnerPartner> findByIdEstabelecimento (String idEstabelecimento);
 }

@@ -5,6 +5,7 @@ import br.com.fooddelivery.tialudeliveryback.dto.OwnerPartnerResponseDTO;
 import br.com.fooddelivery.tialudeliveryback.exception.BusinessException;
 import br.com.fooddelivery.tialudeliveryback.exception.ResourceNotFoundException;
 import br.com.fooddelivery.tialudeliveryback.models.OwnerPartner;
+import br.com.fooddelivery.tialudeliveryback.repository.EstablishmentRepository;
 import br.com.fooddelivery.tialudeliveryback.repository.OwnerPartnerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,13 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class OwnerPartnerService {
 
     private final OwnerPartnerRepository ownerPartnerRepository;
-    private final MerchantService merchantService;
+    private final EstablishmentRepository establishmentRepository;
 
     @Transactional
     public OwnerPartnerResponseDTO createOwnerPartner(String idEstabelecimento, OwnerPartnerRequestDTO request) {
         log.info("Iniciando cadastro de sócio proprietário para estabelecimento: {}", idEstabelecimento);
 
-        validateMerchantExists(idEstabelecimento);
+        validateEstablishmentExists(idEstabelecimento);
 
         if (ownerPartnerRepository.existsByCpf(request.getCpf())) {
             log.warn("Tentativa de cadastro com CPF já existente: {}", request.getCpf());
@@ -47,8 +48,8 @@ public class OwnerPartnerService {
         return OwnerPartnerResponseDTO.success(savedEntity.getIdSocio().toString());
     }
 
-    private void validateMerchantExists(String idEstabelecimento) {
-        if (!merchantService.existsByIdEstabelecimento(idEstabelecimento)) {
+    private void validateEstablishmentExists(String idEstabelecimento) {
+        if (!establishmentRepository.existsByIdEstabelecimento(idEstabelecimento)) {
             log.error("Estabelecimento não encontrado: {}", idEstabelecimento);
             throw new ResourceNotFoundException(
                     "O estabelecimento com ID '" + idEstabelecimento + "' não foi encontrado."

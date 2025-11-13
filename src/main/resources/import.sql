@@ -8,3 +8,7 @@ CREATE TABLE owner_partner (
     telefone VARCHAR(13) NOT NULL,
     id_estabelecimento VARCHAR(36) NOT NULL
 );
+
+CREATE TABLE establishment (
+    id_estabelecimento VARCHAR(36) PRIMARY KEY
+)
