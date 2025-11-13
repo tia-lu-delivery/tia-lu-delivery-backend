@@ -23,6 +23,6 @@ public class RestaurantController {
 
     @PostMapping
     public Restaurant criar(@RequestBody Restaurant restaurant) {
-        return repository.save(restaurant);
+        return repository.save(restaurant); 
     }
 }
