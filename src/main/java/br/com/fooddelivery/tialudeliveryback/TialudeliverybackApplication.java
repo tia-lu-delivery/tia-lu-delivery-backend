@@ -1,5 +1,6 @@
 package br.com.fooddelivery.tialudeliveryback;
 
+import br.com.fooddelivery.tialudeliveryback.simulation.TestRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
