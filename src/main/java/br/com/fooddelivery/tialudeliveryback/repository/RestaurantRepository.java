@@ -1,7 +1,9 @@
 package br.com.fooddelivery.tialudeliveryback.repository;
 
 import br.com.fooddelivery.tialudeliveryback.domain.Restaurant;
-import br.com.fooddelivery.tialudeliveryback.domain.MenuItem;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,40 +11,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class RestaurantRepository {
+public interface RestaurantRepository extends JpaRepository<Restaurant, String> {
     
-    private List<Restaurant> restaurants = new ArrayList<>();
-    private List<MenuItem> menuItems = new ArrayList<>();
+    // Buscar todos os restaurantes como ArrayList
+    @Query("SELECT r FROM Restaurant r")
+    ArrayList<Restaurant> findAllAsArrayList();
     
-    public List<Restaurant> findByMenuItemNameContaining(String nomePrato) {
-        if (nomePrato == null || nomePrato.trim().isEmpty()) {
-            return new ArrayList<>();
-        }
-        
-        String termoPesquisa = nomePrato.toLowerCase().trim();
-        
-        List<MenuItem> itensEncontrados = menuItems.stream()
-            .filter(item -> item.getNome().toLowerCase().contains(termoPesquisa))
-            .collect(Collectors.toList());
-        
-        return itensEncontrados.stream()
-            .map(MenuItem::getRestaurant)
-            .distinct()
-            .collect(Collectors.toList());
-    }
+    // Buscar restaurantes por nome
+    @Query("SELECT r FROM Restaurant r WHERE LOWER(r.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
+    ArrayList<Restaurant> findByNomeContainingIgnoreCase(@Param("nome") String nome);
     
-    public void saveRestaurant(Restaurant restaurant) {
-        if (restaurant.getId() == null) {
-            restaurant.setId(java.util.UUID.randomUUID().toString());
-        }
-        restaurants.add(restaurant);
-        
-        if (restaurant.getMenu() != null) {
-            menuItems.addAll(restaurant.getMenu());
-        }
-    }
+    // Buscar restaurantes por avaliação mínima
+    @Query("SELECT r FROM Restaurant r WHERE r.avaliacaoMedia >= :avaliacaoMinima")
+    ArrayList<Restaurant> findByAvaliacaoMediaGreaterThanEqual(@Param("avaliacaoMinima") Double avaliacaoMinima);
     
-    public List<Restaurant> findAllRestaurants() {
-        return new ArrayList<>(restaurants);
+    // Buscar restaurantes com tempo médio de entrega
+    @Query("SELECT r FROM Restaurant r WHERE r.tempoMedioEntrega = :tempoEntrega")
+    ArrayList<Restaurant> findByTempoMedioEntrega(@Param("tempoEntrega") String tempoEntrega);
+    
+    // Buscar restaurantes com menu carregado (usando JOIN FETCH)
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.menu WHERE r.id = :id")
+    ArrayList<Restaurant> findByIdWithMenu(@Param("id") String id);
+    
+    // Método para buscar todos os restaurantes com seus menus carregados
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.menu")
+    ArrayList<Restaurant> findAllWithMenu();
+    
+    // Método default para converter List para ArrayList
+    default ArrayList<Restaurant> findAllAsArrayListDefault() {
+        return new ArrayList<>(findAll());
     }
 }
