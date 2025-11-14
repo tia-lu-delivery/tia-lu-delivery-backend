@@ -2,6 +2,7 @@ package br.com.fooddelivery.tialudeliveryback.exception;
 
 import br.com.fooddelivery.tialudeliveryback.dto.ErrorDetailDTO;
 import br.com.fooddelivery.tialudeliveryback.dto.ErrorResponseDTO;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,14 @@ import java.util.List;
 
 @RestControllerAdvice
 @Slf4j
-public class Exception {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDTO> handleValidationException(MethodArgumentNotValidException ex) {
         log.error("Erro de validação: {}", ex.getMessage());
 
         List<ErrorDetailDTO> detalhes = new ArrayList<>();
-        
+
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             detalhes.add(ErrorDetailDTO.builder()
                     .campo(error.getField())
@@ -65,7 +66,20 @@ public class Exception {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    @ExceptionHandler(Throwable.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponseDTO> handleJsonParseException(HttpMessageNotReadableException ex) {
+        log.error("Erro na requisição: {}", ex.getMessage());
+
+        ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
+                .codigoErro("JSON_FORMAT_ERROR")
+                .mensagem(ex.getMessage())
+                .detalhes(null)
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGenericException(Exception ex) {
         log.error("Erro interno do servidor: ", ex);
 
