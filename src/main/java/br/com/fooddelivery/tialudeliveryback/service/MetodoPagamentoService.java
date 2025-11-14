@@ -1,58 +1,71 @@
 package br.com.fooddelivery.tialudeliveryback.service;
 
+import br.com.fooddelivery.tialudeliveryback.dto.PagamentoRequestDTO;
+import br.com.fooddelivery.tialudeliveryback.dto.PagamentoResponseDTO;
+import br.com.fooddelivery.tialudeliveryback.entity.Pagamento;
+import br.com.fooddelivery.tialudeliveryback.entity.StatusPagamento;
+import br.com.fooddelivery.tialudeliveryback.repository.PagamentoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
-public class MetodoPagamentoService {
+public class PagamentoService {
 
-    public Map<String, Object> efetuarPagamento(String idPedido, String idMeioPagamento, String cvv, Integer parcelas) {
-        Map<String, Object> resposta = new HashMap<>();
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
 
-        if (idPedido == null || idPedido.isEmpty() || idMeioPagamento == null || idMeioPagamento.isEmpty()) {
-            resposta.put("codigoErro", "VALIDATION_ERROR");
-            resposta.put("mensagem", "Os campos 'idPedido' e 'idMeioPagamento' são obrigatórios.");
-            return resposta;
+    public PagamentoResponseDTO efetuarPagamento(String idPedido, PagamentoRequestDTO requestDTO) {
+        if (pagamentoRepository.existsByIdPedido(idPedido)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "ORDER_STATUS_INVALID: O pedido já está no status 'PAGO_AGUARDANDO_ACEITE' e não pode ser pago novamente.");
         }
-
-        if (cvv == null || cvv.isEmpty()) {
-            resposta.put("codigoErro", "VALIDATION_ERROR");
-            resposta.put("mensagem", "O campo 'cvv' é obrigatório para confirmar o pagamento com o cartão salvo.");
-            return resposta;
-        }
-
-        boolean estoqueDisponivel = true;
-
-        if (!estoqueDisponivel) {
-            resposta.put("codigoErro", "OUT_OF_STOCK");
-            resposta.put("mensagem", "Itens esgotados. O pagamento não foi processado.");
-            return resposta;
-        }
-
         boolean pagamentoAprovado = new Random().nextBoolean();
+        Pagamento pagamento = new Pagamento();
+        pagamento.setIdPedido(idPedido);
+        pagamento.setIdMeioPagamento(requestDTO.getIdMeioPagamento());
+        pagamento.setDataPagamento(LocalDateTime.now());
+        pagamento.setIdTransacao("txn_" + System.currentTimeMillis());
+        pagamento.setParcelas(requestDTO.getParcelas());
+        pagamento.setValorTotalCobrado(BigDecimal.valueOf(65.70)); // Valor simulado
 
         if (pagamentoAprovado) {
-            resposta.put("idPedido", idPedido);
-            resposta.put("mensagem", "Pagamento efetuado com sucesso. O pedido foi enviado ao restaurante e aguarda aceitação.");
-            resposta.put("statusPedidoAtual", "PAGO_AGUARDANDO_ACEITE");
+            pagamento.setStatusPagamento(StatusPagamento.APROVADO);
 
-            Map<String, Object> detalhesPagamento = new HashMap<>();
-            detalhesPagamento.put("status", "APROVADO");
-            detalhesPagamento.put("idTransacao", "txn_" + System.currentTimeMillis());
-            detalhesPagamento.put("valorTotalCobrado", 65.70);
-            detalhesPagamento.put("meioPagamentoUsado", "VISA **** **** **** 4444");
+            boolean envioSucesso = new Random().nextBoolean();
+            pagamento.setErroEnvioEstabelecimento(!envioSucesso);
 
-            resposta.put("detalhesPagamento", detalhesPagamento);
+            Pagamento pagamentoSalvo = pagamentoRepository.save(pagamento);
+
+            return construirResponseSucesso(idPedido, pagamentoSalvo);
 
         } else {
-            resposta.put("idPedido", idPedido);
-            resposta.put("codigoErro", "PAYMENT_REJECTED");
-            resposta.put("mensagem", "Pagamento rejeitado pela instituição financeira (mock). Motivo: saldo insuficiente ou limite excedido.");
-            resposta.put("statusPedidoAtual", "PAGAMENTO_FALHOU");
-        }
+            pagamento.setStatusPagamento(StatusPagamento.REJEITADO);
+            pagamento.setCodigoRejeicao("51");
 
-        return resposta;
+            Pagamento pagamentoSalvo = pagamentoRepository.save(pagamento);
+            
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "PAYMENT_REJECTED: Pagamento Rejeitado pela instituição financeira. Motivo: Saldo insuficiente ou limite excedido.");
+        }
+    }
+
+    private PagamentoResponseDTO construirResponseSucesso(String idPedido, Pagamento pagamento) {
+        return PagamentoResponseDTO.builder()
+                .idPedido(idPedido)
+                .mensagem("Pagamento efetuado com sucesso. O pedido foi enviado ao restaurante e aguarda aceitação.")
+                .statusPedidoAtual("PAGO_AGUARDANDO_ACEITE")
+                .detalhesPagamento(PagamentoResponseDTO.DetalhesPagamento.builder()
+                        .status(pagamento.getStatusPagamento().name())
+                        .idTransacao(pagamento.getIdTransacao())
+                        .valorTotalCobrado(pagamento.getValorTotalCobrado())
+                        .meioPagamentoUsado("VISA **** **** **** 4444")
+                        .build())
+                .build();
     }
 }
