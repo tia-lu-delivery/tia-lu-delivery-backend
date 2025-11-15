@@ -1,11 +1,16 @@
 package br.com.fooddelivery.tialudeliveryback.service;
 
 
+import br.com.fooddelivery.tialudeliveryback.util.CardValidator;
+import br.com.fooddelivery.tialudeliveryback.util.CpfValidator;
+import br.com.fooddelivery.tialudeliveryback.util.EncryptionUtil;
+import br.com.fooddelivery.tialudeliveryback.util.LuhnValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.YearMonth;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -22,7 +27,7 @@ public class PaymentMethodService {
             throw new IllegalArgumentException("Campos obrigatórios ausentes.");
         }
 
-        if (!LuhnValidator.isValid(request.getNumeroCartao())) {
+        if (!CardValidator.isValid(request.getNumeroCartao())) {
             throw new IllegalArgumentException("Número de cartão inválido.");
         }
 
