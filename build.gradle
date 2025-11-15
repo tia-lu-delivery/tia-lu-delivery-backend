@@ -10,7 +10,7 @@ description = 'Demo project for Spring Boot'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(25)
 	}
 }
 
@@ -34,6 +34,8 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// Add H2 for testing
 	testRuntimeOnly 'com.h2database:h2'
+	implementation 'com.h2database:h2'
+
 }
 
 tasks.named('test') {
