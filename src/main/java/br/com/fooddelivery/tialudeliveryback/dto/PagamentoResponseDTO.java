@@ -19,5 +19,7 @@ public class PagamentoResponseDTO {
         private String idTransacao;
         private BigDecimal valorTotalCobrado;
         private String meioPagamentoUsado;
+        private String codigoRejeicao;
+        private String acaoSugerida;
     }
 }
