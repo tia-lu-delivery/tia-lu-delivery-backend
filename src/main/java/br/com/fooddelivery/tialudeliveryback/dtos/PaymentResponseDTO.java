@@ -1,10 +1,9 @@
 package br.com.fooddelivery.tialudeliveryback.dtos;
 
-import lombok.Getter;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentResponseDTO {
@@ -13,6 +12,7 @@ public class PaymentResponseDTO {
     private DetalhesCartao detalhesCartao;
 
     @Getter
+    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     public static class DetalhesCartao {

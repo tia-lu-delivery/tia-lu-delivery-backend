@@ -1,6 +1,9 @@
 package br.com.fooddelivery.tialudeliveryback.services;
 
-import br.com.fooddelivery.tialudeliveryback.controllers.PaymentController;
+import br.com.fooddelivery.tialudeliveryback.dtos.PaymentRequestDTO;
+import br.com.fooddelivery.tialudeliveryback.dtos.PaymentResponseDTO;
+import br.com.fooddelivery.tialudeliveryback.entities.PaymentMethod;
+import br.com.fooddelivery.tialudeliveryback.repositories.PaymentRepository;
 import br.com.fooddelivery.tialudeliveryback.util.CpfValidator;
 import br.com.fooddelivery.tialudeliveryback.util.EncryptionUtil;
 import br.com.fooddelivery.tialudeliveryback.util.CardValidator;
@@ -17,7 +20,7 @@ public class PaymentService {
     private final PaymentRepository repository;
 
     @SuppressWarnings("null") 
-    public PaymentResponse cadastrar(String idUsuario, PaymentRequest request) {
+    public PaymentResponseDTO cadastrar(String idUsuario, PaymentRequestDTO request) {
 
         if (request.getNumeroCartao() == null || request.getCvv() == null ||
             request.getNomeTitular() == null || request.getCpfTitular() == null ||
@@ -61,11 +64,11 @@ public class PaymentService {
                 .idUsuario(idUsuario)
                 .build());
 
-        return PaymentResponse.builder()
+        return PaymentResponseDTO.builder()
                 .idMeioPagamento(saved.getIdMeioPagamento())
                 .mensagem("Cartão cadastrado com sucesso. Dados armazenados.")
-                .detalhesCartao(PaymentResponse.DetalhesCartao.builder()
-                        .tipo(saved.getTipoCartao())
+                .detalhesCartao(PaymentResponseDTO.DetalhesCartao.builder()
+                        .tipo(saved.getTipoCartao().toString())
                         .bandeira(bandeira)
                         .ultimosDigitos(ultimosDigitos)
                         .nomeExibicao(bandeira + " ************" + ultimosDigitos)
