@@ -1,0 +1,42 @@
+ec5077f HEAD@{0}: checkout: moving from main to feature/DWOO-001
+ec5077f HEAD@{1}: checkout: moving from feature/DWOO-001-15 to main
+ec5077f HEAD@{2}: checkout: moving from feature/DWOO-001-14 to feature/DWOO-001-15
+a3ca96b HEAD@{3}: checkout: moving from feature/DWOO-001-15 to feature/DWOO-001-14
+ec5077f HEAD@{4}: checkout: moving from feature/DWOO-001-14 to feature/DWOO-001-15
+a3ca96b HEAD@{5}: commit: fix: remove arquivos indevidos da Task 3
+e8abd40 HEAD@{6}: checkout: moving from feature/DWOO-001-15 to feature/DWOO-001-14
+ec5077f HEAD@{7}: checkout: moving from feature/DWOO-001-14 to feature/DWOO-001-15
+e8abd40 HEAD@{8}: checkout: moving from feature/DWOO-001-13 to feature/DWOO-001-14
+62a5b83 HEAD@{9}: checkout: moving from feature/DWOO-001-12 to feature/DWOO-001-13
+c4a1ff8 HEAD@{10}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-12
+ec5077f HEAD@{11}: checkout: moving from feature/DWOO-001-15 to feature/DWOO-001
+ec5077f HEAD@{12}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-15
+ec5077f HEAD@{13}: checkout: moving from feature/DWOO-001-14 to feature/DWOO-001
+e8abd40 HEAD@{14}: commit: feat: Task 3 - implementa services e custom exceptions
+ec5077f HEAD@{15}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-14
+ec5077f HEAD@{16}: checkout: moving from feature/DWOO-001-13 to feature/DWOO-001
+62a5b83 HEAD@{17}: commit: feat: Task 2 - implementa DTOs CardapioRequest, CardapioResponse e ErrorResponse
+ec5077f HEAD@{18}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-13
+ec5077f HEAD@{19}: checkout: moving from feature/DWOO-001 to feature/DWOO-001
+ec5077f HEAD@{20}: reset: moving to HEAD~1
+760d792 HEAD@{21}: checkout: moving from feature/DWOO-001 to feature/DWOO-001
+760d792 HEAD@{22}: checkout: moving from feature/DWOO-001-12 to feature/DWOO-001
+c4a1ff8 HEAD@{23}: commit: feat: Task 1 - implementa entities e repositories
+ec5077f HEAD@{24}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-12
+760d792 HEAD@{25}: checkout: moving from feature/DWOO-001 to feature/DWOO-001
+760d792 HEAD@{26}: checkout: moving from feature/DWOO-001 to feature/DWOO-001
+760d792 HEAD@{27}: commit: feat: Task 1 - implementa entities e repositories
+ec5077f HEAD@{28}: checkout: moving from feature/DWOO-001-15 to feature/DWOO-001
+18e8de4 HEAD@{29}: commit: feat: implementa entity Cardapio e Estabelecimento + repositories
+ec5077f HEAD@{30}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-15
+ec5077f HEAD@{31}: checkout: moving from feature/DWOO-001-14 to feature/DWOO-001
+ec5077f HEAD@{32}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-14
+ec5077f HEAD@{33}: checkout: moving from feature/DWOO-001-13 to feature/DWOO-001
+ec5077f HEAD@{34}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-13
+ec5077f HEAD@{35}: checkout: moving from feature/DWOO-001 to feature/DWOO-001
+ec5077f HEAD@{36}: checkout: moving from feature/DWOO-001-12 to feature/DWOO-001
+ec5077f HEAD@{37}: checkout: moving from feature/DWOO-001 to feature/DWOO-001-12
+ec5077f HEAD@{38}: checkout: moving from feature/DWOO-001 to feature/DWOO-001
+ec5077f HEAD@{39}: checkout: moving from main to feature/DWOO-001
+ec5077f HEAD@{40}: checkout: moving from main to main
+ec5077f HEAD@{41}: clone: from https://github.com/tia-lu-delivery/tia-lu-delivery-backend.git
