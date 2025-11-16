@@ -1,4 +1,4 @@
-package br.com.fooddelivery.tialudeliveryback.controllers;
+package br.com.fooddelivery.tialudeliveryback.Controllers;
 
 import br.com.fooddelivery.tialudeliveryback.Service.ProductDisableService;
 import br.com.fooddelivery.tialudeliveryback.dto.ProdutoInativadoRes;

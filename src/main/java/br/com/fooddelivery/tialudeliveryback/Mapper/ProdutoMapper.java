@@ -1,7 +1,7 @@
 package br.com.fooddelivery.tialudeliveryback.Mapper;
 
 import br.com.fooddelivery.tialudeliveryback.dto.ProdutoInativadoRes;
-import br.com.fooddelivery.tialudeliveryback.Entity.Produto;
+import br.com.fooddelivery.tialudeliveryback.repository.model.Produto;
 
 public class ProdutoMapper {
 

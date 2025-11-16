@@ -3,9 +3,9 @@ package br.com.fooddelivery.tialudeliveryback.Service;
 import br.com.fooddelivery.tialudeliveryback.Entity.Estabelecimento;
 import br.com.fooddelivery.tialudeliveryback.dto.ProdutoInativadoRes;
 import br.com.fooddelivery.tialudeliveryback.Mapper.ProdutoMapper;
-import br.com.fooddelivery.tialudeliveryback.Entity.Produto;
+import br.com.fooddelivery.tialudeliveryback.repository.model.Produto;
 import br.com.fooddelivery.tialudeliveryback.Repository.EstabelecimentoRepository;
-import br.com.fooddelivery.tialudeliveryback.Repository.ProdutoRepository;
+import br.com.fooddelivery.tialudeliveryback.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
