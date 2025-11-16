@@ -23,7 +23,6 @@ public class PaymentRequestDTO {
     private Integer validadeMes;
 
     @NotNull(message = "O ano de validade não pode ser nulo.")
-    @Min(value = 2024, message = "O ano de validade deve ser 2024 ou superior.")
     private Integer validadeAno;
 
     @NotBlank(message = "O CVV não pode estar vazio.")
