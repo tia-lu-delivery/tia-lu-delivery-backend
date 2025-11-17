@@ -30,7 +30,7 @@ public class ProductDisableController {
 
         try {
             // Chama o Service, o Service deve retornar o DTO em caso de sucesso
-            ProdutoInativadoRes responseDTO = productDisableService.disableProduct(idEstabelecimento, idProduto);
+            ProdutoInativadoRes responseDTO = productDisableService.disableProduct(idProduto);
 
             // Retorna 200 OK com o DTO
             return ResponseEntity.ok(responseDTO);
