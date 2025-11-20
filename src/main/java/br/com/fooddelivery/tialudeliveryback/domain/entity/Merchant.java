@@ -23,4 +23,6 @@ public class Merchant {
     private UUID id;
 
     private String name;
+    
+    private String cnpj;
 }
