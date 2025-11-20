@@ -1,6 +1,8 @@
 package br.com.fooddelivery.tialudeliveryback.controller;
 
+import br.com.fooddelivery.tialudeliveryback.dto.CardapioDTO;
 import br.com.fooddelivery.tialudeliveryback.dto.MenuDTO;
+import br.com.fooddelivery.tialudeliveryback.entity.CardapioEntity;
 import br.com.fooddelivery.tialudeliveryback.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,5 +21,4 @@ public class MenuController {
         MenuDTO menu = menuService.getMenuById(idCardapio);
         return ResponseEntity.ok(menu);
     }
-
 }

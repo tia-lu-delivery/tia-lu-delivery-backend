@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.List;
 
 @Entity
 @Table(name = "CARDAPIO")
@@ -15,7 +18,8 @@ import lombok.NoArgsConstructor;
 public class CardapioEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid")
+    @Column(length = 36)
     private String id;
 
     @Column(nullable = false)
@@ -26,5 +30,8 @@ public class CardapioEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estabelecimento_id", referencedColumnName = "id")
     private EstabelecimentoEntity estabelecimento;
+
+    @OneToMany(mappedBy = "cardapio", fetch = FetchType.LAZY)
+    private List<CategoriaEntity> categorias;
 
 }

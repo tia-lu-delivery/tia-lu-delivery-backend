@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 public class ProdutoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid")
+    @Column(length = 36)
     private String id;
 
     @Column(nullable = false)
