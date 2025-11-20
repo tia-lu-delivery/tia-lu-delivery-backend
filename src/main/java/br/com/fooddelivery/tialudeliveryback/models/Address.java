@@ -16,6 +16,7 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Long idEndereco;
     Long idUsuario;
+    Boolean isEnderecoPadrao;
 }
