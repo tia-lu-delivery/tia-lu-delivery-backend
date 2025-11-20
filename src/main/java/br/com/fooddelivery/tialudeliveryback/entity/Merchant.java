@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Entity
-@Table(name = "tb_merchant") // Especificado na task #155
-@Data // Lombok para getters, setters, toString, etc.
+@Table(name = "tb_merchant")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Merchant {
