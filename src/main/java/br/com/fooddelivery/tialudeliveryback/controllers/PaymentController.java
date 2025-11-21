@@ -17,10 +17,10 @@ public class PaymentController {
 
     @PostMapping("/{idUsuario}/payment-methods")
     public ResponseEntity<PaymentResponseDTO> addCard(
-            @PathVariable Long idUsuario,
+            @PathVariable String idUsuario,
             @Valid @RequestBody PaymentRequestDTO paymentRequest) {
 
-        PaymentResponseDTO response = paymentService.addCard(idUsuario, paymentRequest);
+        PaymentResponseDTO response = paymentService.cadastrar(idUsuario, paymentRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
