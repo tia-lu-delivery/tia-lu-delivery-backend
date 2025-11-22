@@ -1,11 +1,15 @@
 package br.com.fooddelivery.tialudeliveryback.controller;
 
-
+import br.com.fooddelivery.tialudeliveryback.model.Merchant;
+import br.com.fooddelivery.tialudeliveryback.service.MerchantService;
+import br.com.fooddelivery.tialudeliveryback.dto.*;
+import br.com.fooddelivery.tialudeliveryback.exception.CnpjConflictException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
@@ -24,18 +28,18 @@ public class MerchantController {
     //Criando o método que responde ao POST
     @PostMapping
     // Pegando Json do corpo da requisição e aciona a validação
-    public ResponseEntity<?> cadastrar(@RequestBody @Valid MerchantResquestDTO dto) {
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid MerchantRequestDTO dto) {
         try {
             // Tenta chamar o service
-            String idEstabelecimento = merchantService.cadastrar(dto);
+            Merchant idEstabelecimento = merchantService.registerMerchant(dto);
             // Prepara o DTO de resposta de sucesso com o ID gerado
-            MerchantSucessResponseDTO reponse = new MerchantSucessResponseDTO(idEstabelecimento, "Estabelecimento cadastrado...");
+            MerchantSuccessResponseDTO reponse = new MerchantSuccessResponseDTO(idEstabelecimento.getIdEstabelecimento(), "Estabelecimento cadastrado...");
 
             // Retorna status http de sucesso na criação "201" caso o try funcione
             return ResponseEntity.status(HttpStatus.CREATED).body(reponse);
 
         }
-        catch (CnpjDuplicadoException e ) {
+        catch (CnpjConflictException e ) {
 
             // Prepara o DTO de resposta de erro (Conflito)
             ConflictErrorResponseDTO erro = new ConflictErrorResponseDTO("DUPLICATE_ENTITY", e.getMessage(), "Solicitar login...");
