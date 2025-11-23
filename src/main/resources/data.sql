@@ -5,7 +5,7 @@ INSERT INTO produtos (id, nome, preco, estoque, estabelecimento_id) VALUES (100,
 INSERT INTO produtos (id, nome, preco, estoque, estabelecimento_id) VALUES (102, 'Batata Frita', 15.00, 30, 1);
 INSERT INTO produtos (id, nome, preco, estoque, estabelecimento_id) VALUES (200, 'Pizza de Calabresa', 45.00, 20, 2);
 
-INSERT INTO usuarios (id, nome, email) VALUES (1, 'Franklin', 'franklin@email.com');
+INSERT INTO usuarios (id, nome, email, ativo) VALUES (1, 'Franklin', 'franklin@email.com', true);
 
 INSERT INTO enderecos (id, cep, rua, numero, usuario_id) VALUES (10, '11111-111', 'Rua da Faculdade', '123', 1);
 INSERT INTO enderecos (id, cep, rua, numero, usuario_id) VALUES (11, '22222-222', 'Avenida Principal', '456', 1);
