@@ -1,35 +1,34 @@
 package br.com.fooddelivery.tialudeliveryback.api.dto;
 
 import br.com.fooddelivery.tialudeliveryback.domain.MenuItem;
+import java.math.BigDecimal;
 
 public class MenuItemSearchResponseDTO {
 
-    private String idPrato;
+    private Long idPrato;
     private String nome;
-    private Double preco;
-    private String descricaoCurta;
+    private String descricao;
+    private BigDecimal preco;
 
+    // Construtor a partir do MenuItem real
     public MenuItemSearchResponseDTO(MenuItem menuItem) {
         this.idPrato = menuItem.getId();
         this.nome = menuItem.getNome();
+        this.descricao = menuItem.getDescricao();
         this.preco = menuItem.getPreco();
-        this.descricaoCurta = menuItem.getDescricaoCurta();
+    }
+
+    // Construtor para dados fixos (exemplo)
+    public MenuItemSearchResponseDTO(String idPrato, String nome, double preco, String descricao) {
+        this.idPrato = idPrato != null ? Long.valueOf(idPrato.replaceAll("\\D", "")) : null;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = BigDecimal.valueOf(preco);
     }
 
     // Getters
-    public String getIdPrato() {
-        return idPrato;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public Double getPreco() {
-        return preco;
-    }
-
-    public String getDescricaoCurta() {
-        return descricaoCurta;
-    }
+    public Long getIdPrato() { return idPrato; }
+    public String getNome() { return nome; }
+    public String getDescricao() { return descricao; }
+    public BigDecimal getPreco() { return preco; }
 }

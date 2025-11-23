@@ -1,27 +1,29 @@
 package br.com.fooddelivery.tialudeliveryback.domain;
 
 import jakarta.persistence.*;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "restaurants")
 public class Restaurant {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false)
     private String nome;
-
-    @Column(name = "avaliacao_media")
     private Double avaliacaoMedia;
-
-    @Column(name = "tempo_medio_entrega")
     private String tempoMedioEntrega;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MenuItem> menu;
+    // Construtor padrão
+    public Restaurant() {}
+
+    // Construtor completo para testes e DTOs
+    public Restaurant(String id, String nome, Double avaliacaoMedia, String tempoMedioEntrega) {
+        this.id = id;
+        this.nome = nome;
+        this.avaliacaoMedia = avaliacaoMedia;
+        this.tempoMedioEntrega = tempoMedioEntrega;
+    }
 
     // Getters e Setters
     public String getId() { return id; }
@@ -36,6 +38,16 @@ public class Restaurant {
     public String getTempoMedioEntrega() { return tempoMedioEntrega; }
     public void setTempoMedioEntrega(String tempoMedioEntrega) { this.tempoMedioEntrega = tempoMedioEntrega; }
 
-    public List<MenuItem> getMenu() { return menu; }
-    public void setMenu(List<MenuItem> menu) { this.menu = menu; }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Restaurant)) return false;
+        Restaurant that = (Restaurant) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

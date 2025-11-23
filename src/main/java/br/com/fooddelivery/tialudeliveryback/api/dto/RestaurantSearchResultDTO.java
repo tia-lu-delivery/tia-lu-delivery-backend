@@ -2,7 +2,6 @@ package br.com.fooddelivery.tialudeliveryback.api.dto;
 
 import br.com.fooddelivery.tialudeliveryback.domain.Restaurant;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RestaurantSearchResultDTO {
 
@@ -21,23 +20,9 @@ public class RestaurantSearchResultDTO {
     }
 
     // Getters
-    public String getIdRestaurante() {
-        return idRestaurante;
-    }
-
-    public String getNomeRestaurante() {
-        return nomeRestaurante;
-    }
-
-    public Double getAvaliacaoMedia() {
-        return avaliacaoMedia;
-    }
-
-    public String getTempoMedioEntrega() {
-        return tempoMedioEntrega;
-    }
-
-    public List<MenuItemSearchResponseDTO> getPratosEncontrados() {
-        return pratosEncontrados;
-    }
+    public String getIdRestaurante() { return idRestaurante; }
+    public String getNomeRestaurante() { return nomeRestaurante; }
+    public Double getAvaliacaoMedia() { return avaliacaoMedia; }
+    public String getTempoMedioEntrega() { return tempoMedioEntrega; }
+    public List<MenuItemSearchResponseDTO> getPratosEncontrados() { return pratosEncontrados; }
 }
