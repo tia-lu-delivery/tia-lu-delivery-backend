@@ -16,6 +16,9 @@ public class Usuario {
 
     private String email;
 
+    // novo campo para status da conta (ativa/inativa)
+    private boolean ativo = true; // por padrão, conta nasce ativa
+
     @JsonManagedReference
     @OneToMany(mappedBy = "usuario")
     private List<Endereco> enderecos;
@@ -43,6 +46,14 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public List<Endereco> getEnderecos() {
