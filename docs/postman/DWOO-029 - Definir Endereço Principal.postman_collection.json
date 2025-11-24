@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "a20a98b0-f174-480a-b713-886906cedb1f",
+		"name": "DWOO-029 - Definir Endereço Principal",
+		"description": "Coleção completa para testar os cenários de definição de endereço principal conforme DWOO-029",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32608596"
+	},
+	"item": [
+		{
+			"name": "Cenários de Sucesso",
+			"item": [
+				{
+					"name": "Fluxo de Validação - Comparação (Antes/Depois)",
+					"item": [
+						{
+							"name": "Passo 1 - Listar Estado Inicial",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code é 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Endereço 67890 deve estar marcado como principal (true)\", function () {",
+											"    var item = jsonData.find(e => e.id === 67890);",
+											"    pm.expect(item).to.exist;",
+											"    pm.expect(item.padrao_entrega).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/address",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"address"
+									]
+								},
+								"description": "Verifica o estado inicial do banco Mock."
+							},
+							"response": []
+						},
+						{
+							"name": "Passo 2 - Alterar Principal para 12345",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code é 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/address/12345/set-principal",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"address",
+										"12345",
+										"set-principal"
+									]
+								},
+								"description": "Executa a troca de endereço principal."
+							},
+							"response": []
+						},
+						{
+							"name": "Passo 3 - Validar Troca (Final)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code é 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"CA-004 - Endereço 12345 deve ser TRUE (Novo Principal)\", function () {",
+											"    var novo = jsonData.find(e => e.id === 12345);",
+											"    pm.expect(novo.padrao_entrega).to.be.true;",
+											"});",
+											"",
+											"pm.test(\"CA-004 - Endereço 67890 deve ser FALSE (Desmarcado)\", function () {",
+											"    var antigo = jsonData.find(e => e.id === 67890);",
+											"    pm.expect(antigo.padrao_entrega).to.be.false;",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/address",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"address"
+									]
+								},
+								"description": "Valida se a regra de desmarcar o anterior funcionou."
+							},
+							"response": []
+						}
+					],
+					"description": "Fluxo sequencial para garantir que a flag e_principal é trocada corretamente."
+				},
+				{
+					"name": "CA-001 - Definir Endereço como Principal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code é 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Resposta contém status 'sucesso'\", function () {",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData.status).to.eql(\"sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Resposta contém id_endereco_principal igual a 12345\", function () {",
+									"    pm.expect(jsonData).to.have.property('id_endereco_principal');",
+									"    pm.expect(jsonData.id_endereco_principal).to.eql(12345);",
+									"});",
+									"",
+									"pm.test(\"Resposta contém detalhe da operação\", function () {",
+									"    pm.expect(jsonData).to.have.property('detalhe');",
+									"    pm.expect(jsonData.detalhe).to.be.a('string');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "UserId",
+								"value": "{{userId}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/address/12345/set-principal",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"address",
+								"12345",
+								"set-principal"
+							]
+						},
+						"description": "Valida o critério de aceite CA-001 e CA-005: Sucesso ao marcar um endereço existente."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cenários de Erro - Regras de Negócio",
+			"item": [
+				{
+					"name": "CA-006 - Erro - Endereço Não Encontrado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code é 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Resposta contém objeto 'erro'\", function () {",
+									"    pm.expect(jsonData).to.have.property('erro');",
+									"});",
+									"",
+									"pm.test(\"Código de erro é ENDERECO_NAO_ENCONTRADO\", function () {",
+									"    pm.expect(jsonData.erro.codigo).to.eql(\"ENDERECO_NAO_ENCONTRADO\");",
+									"});",
+									"",
+									"pm.test(\"Resposta contém detalhe explicativo\", function () {",
+									"    pm.expect(jsonData.erro.detalhe).to.eql(\"O endereço especificado não existe.\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "UserId",
+								"value": "{{userId}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/address/9999/set-principal",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"address",
+								"9999",
+								"set-principal"
+							]
+						},
+						"description": "Valida o comportamento quando o ID informado não existe."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Testes Edge Cases",
+			"item": [
+				{
+					"name": "Edge Case - Troca Recíproca (Voltar para o anterior)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code é 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"ID principal voltou a ser 67890\", function () {",
+									"    pm.expect(jsonData.id_endereco_principal).to.eql(67890);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "UserId",
+								"value": "{{userId}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/address/67890/set-principal",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"address",
+								"67890",
+								"set-principal"
+							]
+						},
+						"description": "Verifica se o sistema permite alterar o principal múltiplas vezes sem erro."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
