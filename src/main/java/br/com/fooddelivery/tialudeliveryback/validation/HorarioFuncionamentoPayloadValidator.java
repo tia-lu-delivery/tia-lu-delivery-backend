@@ -42,4 +42,23 @@ public class HorarioFuncionamentoPayloadValidator implements ConstraintValidator
         context.buildConstraintViolationWithTemplate(msg)
                 .addConstraintViolation();
     }
+
+    private boolean validarHorarios(HorarioFuncionamentoRequestDTO dto, ConstraintValidatorContext context) {
+        if (Boolean.TRUE.equals(dto.getAberto())) {
+            if (dto.getHoraAbertura() == null || dto.getHoraFechamento() == null) {
+                adicionarMensagem(context, "Para dias abertos, hora_abertura e hora_fechamento são obrigatórios.");
+                return false;
+            }
+
+            // Valida se hora_fechamento é posterior à hora_abertura
+            if (dto.getHoraFechamento().compareTo(dto.getHoraAbertura()) <= 0) {
+                adicionarMensagem(context,
+                        String.format("Hora de fechamento (%s) deve ser posterior à hora de abertura (%s).",
+                                dto.getHoraFechamento(), dto.getHoraAbertura()));
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
