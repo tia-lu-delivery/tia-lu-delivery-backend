@@ -35,7 +35,7 @@ public class AddressController {
             Map<String, Object> erroResponse = Map.of(
                     "erro", Map.of(
                             "codigo", "ENDERECO_NAO_ENCONTRADO",
-                            "detalhe", "O endereço especificado não existe."));
+                            "detalhe", "O endereço especificado não existe ou não pertence ao usuário."));
             return ResponseEntity.status(404).body(erroResponse);
         }
     }

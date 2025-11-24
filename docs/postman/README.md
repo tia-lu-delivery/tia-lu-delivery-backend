@@ -144,7 +144,7 @@ pm.test("CA-004 - Endereço 12345 deve ser TRUE (Novo Principal)", function () {
 {
   "erro": {
     "codigo": "ENDERECO_NAO_ENCONTRADO",
-    "detalhe": "O endereço especificado não existe."
+    "detalhe": "O endereço especificado não existe ou não pertence ao usuário."
   }
 }
 ```
