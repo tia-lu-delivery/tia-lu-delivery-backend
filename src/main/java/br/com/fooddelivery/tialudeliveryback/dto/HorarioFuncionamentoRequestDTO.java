@@ -1,10 +1,12 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
 
+import br.com.fooddelivery.tialudeliveryback.validation.ValidHorarioDia;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+@ValidHorarioDia
 public class HorarioFuncionamentoRequestDTO {
 
     @NotNull(message = "O campo 'dia' é obrigatório.")
