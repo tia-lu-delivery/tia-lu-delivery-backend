@@ -1,6 +1,7 @@
 package br.com.fooddelivery.tialudeliveryback.controllers;
 
 import br.com.fooddelivery.tialudeliveryback.dtos.AddressResponseDTO;
+import br.com.fooddelivery.tialudeliveryback.exceptions.AddressNotFoundException;
 import br.com.fooddelivery.tialudeliveryback.services.AddressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class AddressController {
             @RequestHeader("UserId") Long userId) {
         try {
             return ResponseEntity.ok(addressService.setAddressAsPrincipal(idEndereco, userId));
-        } catch (RuntimeException e) {
+        } catch (AddressNotFoundException e) {
             Map<String, Object> erroResponse = Map.of(
                     "erro", Map.of(
                             "codigo", "ENDERECO_NAO_ENCONTRADO",
