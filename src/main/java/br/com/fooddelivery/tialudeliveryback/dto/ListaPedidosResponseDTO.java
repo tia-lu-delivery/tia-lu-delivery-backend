@@ -1,36 +1,24 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+// CA-007: DTO de alto nível que contém a lista e os dados de paginação
 public class ListaPedidosResponseDTO {
-
-    private int page;
-    private int size;
-
-    @JsonProperty("total_pedidos")
-    private long totalPedidos;
-
-    private List<PedidoResumoDTO> pedidos;
-
-    public ListaPedidosResponseDTO() {}
+    private final int page;
+    private final int size;
+    private final long total_pedidos; // CA-007: Nome de campo exigido
+    private final List<PedidoResumoDTO> pedidos;
 
     public ListaPedidosResponseDTO(int page, int size, long totalPedidos, List<PedidoResumoDTO> pedidos) {
         this.page = page;
         this.size = size;
-        this.totalPedidos = totalPedidos;
+        this.total_pedidos = totalPedidos; // Mapeado para o nome exigido
         this.pedidos = pedidos;
     }
 
+    // Getters
     public int getPage() { return page; }
-    public void setPage(int page) { this.page = page; }
-
     public int getSize() { return size; }
-    public void setSize(int size) { this.size = size; }
-
-    public long getTotalPedidos() { return totalPedidos; }
-    public void setTotalPedidos(long totalPedidos) { this.totalPedidos = totalPedidos; }
-
+    public long getTotal_pedidos() { return total_pedidos; }
     public List<PedidoResumoDTO> getPedidos() { return pedidos; }
-    public void setPedidos(List<PedidoResumoDTO> pedidos) { this.pedidos = pedidos; }
 }
