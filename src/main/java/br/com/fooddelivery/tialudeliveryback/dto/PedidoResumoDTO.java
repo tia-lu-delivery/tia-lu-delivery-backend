@@ -1,29 +1,20 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public class PedidoResumoDTO {
-
-    @JsonProperty("numero_pedido")
     private String numeroPedido;
 
-    @JsonProperty("data_abertura")
-    private LocalDateTime dataAbertura;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private OffsetDateTime dataAbertura;
 
-    @JsonProperty("status_pedido")
     private String statusPedido;
-
-    @JsonProperty("nome_restaurante")
     private String nomeRestaurante;
-
-    @JsonProperty("valor_total")
     private BigDecimal valorTotal;
 
-    public PedidoResumoDTO() {}
-
-    public PedidoResumoDTO(String numeroPedido, LocalDateTime dataAbertura, String statusPedido, String nomeRestaurante, BigDecimal valorTotal) {
+    public PedidoResumoDTO(String numeroPedido, OffsetDateTime dataAbertura, String statusPedido, String nomeRestaurante, BigDecimal valorTotal) {
         this.numeroPedido = numeroPedido;
         this.dataAbertura = dataAbertura;
         this.statusPedido = statusPedido;
@@ -31,18 +22,19 @@ public class PedidoResumoDTO {
         this.valorTotal = valorTotal;
     }
 
+    // Getters
     public String getNumeroPedido() { return numeroPedido; }
-    public void setNumeroPedido(String numeroPedido) { this.numeroPedido = numeroPedido; }
 
-    public LocalDateTime getDataAbertura() { return dataAbertura; }
-    public void setDataAbertura(LocalDateTime dataAbertura) { this.dataAbertura = dataAbertura; }
+    public OffsetDateTime getDataAbertura() { return dataAbertura; }
 
     public String getStatusPedido() { return statusPedido; }
-    public void setStatusPedido(String statusPedido) { this.statusPedido = statusPedido; }
-
     public String getNomeRestaurante() { return nomeRestaurante; }
-    public void setNomeRestaurante(String nomeRestaurante) { this.nomeRestaurante = nomeRestaurante; }
-
     public BigDecimal getValorTotal() { return valorTotal; }
+
+    // Setters
+    public void setNumeroPedido(String numeroPedido) { this.numeroPedido = numeroPedido; }
+    public void setDataAbertura(OffsetDateTime dataAbertura) { this.dataAbertura = dataAbertura; }
+    public void setStatusPedido(String statusPedido) { this.statusPedido = statusPedido; }
+    public void setNomeRestaurante(String nomeRestaurante) { this.nomeRestaurante = nomeRestaurante; }
     public void setValorTotal(BigDecimal valorTotal) { this.valorTotal = valorTotal; }
 }
