@@ -34,6 +34,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// Add H2 for testing
 	testRuntimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {
