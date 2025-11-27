@@ -2,6 +2,7 @@ package br.com.fooddelivery.tialudeliveryback.services.impl;
 
 import br.com.fooddelivery.tialudeliveryback.dtos.AddressResponseDTO;
 import br.com.fooddelivery.tialudeliveryback.dtos.SetPrincipalAddressResponseDTO;
+import br.com.fooddelivery.tialudeliveryback.exceptions.AddressNotFoundException;
 import br.com.fooddelivery.tialudeliveryback.services.AddressService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,7 +43,7 @@ public class AddressServiceMock implements AddressService {
         MockEndereco alvo = bancoDeDadosFake.stream()
                 .filter(e -> e.getId().equals(idEndereco))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
+                .orElseThrow(() -> new AddressNotFoundException("Endereço não encontrado"));
 
         bancoDeDadosFake.forEach(e -> e.setPrincipal(false));
         alvo.setPrincipal(true);
