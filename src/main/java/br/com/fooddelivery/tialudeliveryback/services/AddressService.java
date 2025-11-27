@@ -5,7 +5,8 @@ import br.com.fooddelivery.tialudeliveryback.dtos.SetPrincipalAddressResponseDTO
 import java.util.List;
 
 public interface AddressService {
-    SetPrincipalAddressResponseDTO setAddressAsPrincipal(Long idEndereco, Long idUsuario);
+    SetPrincipalAddressResponseDTO setAddressAsPrincipal(Long idEndereco, Long idUsuario)
+            throws RuntimeException;
 
     List<AddressResponseDTO> listAllAddresses(Long idUsuario);
 }

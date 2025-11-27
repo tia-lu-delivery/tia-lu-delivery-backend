@@ -4,6 +4,7 @@ import br.com.fooddelivery.tialudeliveryback.dtos.AddressResponseDTO;
 import br.com.fooddelivery.tialudeliveryback.services.AddressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,8 @@ public class AddressController {
 
     @PatchMapping("/{id_endereco}/set-principal")
     public ResponseEntity<?> setPrincipalAddress(
-            @PathVariable("id_endereco") Long idEndereco,
-            @RequestHeader("UserId") Long userId) {
+            @PathVariable("id_endereco") @Positive Long idEndereco,
+            @RequestHeader("UserId") @Positive Long userId) {
         try {
             return ResponseEntity.ok(addressService.setAddressAsPrincipal(idEndereco, userId));
         } catch (RuntimeException e) {
