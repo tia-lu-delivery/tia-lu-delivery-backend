@@ -16,7 +16,7 @@ public interface AddressRepository extends JpaRepository<Address, Long>{
     boolean existsByIdEnderecoAndIdUsuario(Long idEndereco, Long idUsuario);
 
     @Modifying
-    @Query("UPDATE Endereco e SET e.isEnderecoPadrao = false WHERE e.idUsuario = :idUsuario")
+    @Query("UPDATE Address e SET e.isEnderecoPadrao = false WHERE e.idUsuario = :idUsuario")
     void removerEnderecoPadraoDoUsuario(@Param("idUsuario") Long idUsuario);
 }
 
