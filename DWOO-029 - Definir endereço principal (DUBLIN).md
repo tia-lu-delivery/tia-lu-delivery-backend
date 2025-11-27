@@ -75,8 +75,8 @@ JSON
 
 Features:
 
-#160 Criar método set-principal no AddressController
-#161 Criar Repository para Endereço
-#162 Criar DTOs de Response e Exception
-#163 Criar queries customizadas no AddressRepository para buscar e atualizar endereço principal
-#164 Criar DTOs de resposta (SetPrincipalAddressResponseDTO e AddressErrorResponseDTO) e exception (AddressNotFoundException)
+#160 Criar método set-principal no AddressController (Bruno)
+#161 Criar Repository para Endereço (Claudio)
+#162 Criar DTOs de Response e Exception (Gabriel)
+#163 Criar queries customizadas no AddressRepository para buscar e atualizar endereço principal (Arthur)
+#164 Criar DTOs de resposta (SetPrincipalAddressResponseDTO e AddressErrorResponseDTO) e exception (AddressNotFoundException) (Kéven)
