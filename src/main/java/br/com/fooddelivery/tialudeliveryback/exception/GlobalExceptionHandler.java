@@ -19,15 +19,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorResponseDTO> handleNaoAutorizado(UnauthorizedException ex) {
-        ErrorResponseDTO errorResponse = ErrorResponseDTO.of(
-                "NAO_AUTORIZADO",
-                ex.getMessage()
-        );
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
-    }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleException(Exception ex) {
         ErrorResponseDTO errorResponse = ErrorResponseDTO.of(
