@@ -1,0 +1,43 @@
+package br.com.fooddelivery.tialudeliveryback.controllers;
+
+import br.com.fooddelivery.tialudeliveryback.dtos.AddressResponseDTO;
+import br.com.fooddelivery.tialudeliveryback.services.AddressService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import jakarta.validation.constraints.*;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/v1/users/address")
+public class AddressController {
+
+    private final AddressService addressService;
+
+    public AddressController(AddressService addressService) {
+        this.addressService = addressService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AddressResponseDTO>> listAddresses(
+            @RequestHeader("UserId") Long userId) {
+        List<AddressResponseDTO> lista = addressService.listAllAddresses(userId);
+        return ResponseEntity.ok(lista);
+    }
+
+    @PatchMapping("/{id_endereco}/set-principal")
+    public ResponseEntity<?> setPrincipalAddress(
+            @PathVariable("id_endereco") @Positive Long idEndereco,
+            @RequestHeader("UserId") @Positive Long userId) {
+        try {
+            return ResponseEntity.ok(addressService.setAddressAsPrincipal(idEndereco, userId));
+        } catch (RuntimeException e) {
+            Map<String, Object> erroResponse = Map.of(
+                    "erro", Map.of(
+                            "codigo", "ENDERECO_NAO_ENCONTRADO",
+                            "detalhe", "O endereço especificado não existe ou não pertence ao usuário."));
+            return ResponseEntity.status(404).body(erroResponse);
+        }
+    }
+}
