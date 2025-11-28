@@ -7,6 +7,9 @@ import br.com.fooddelivery.tialudeliveryback.enum_.TipoCartao;
 import br.com.fooddelivery.tialudeliveryback.mapper.PaymentMethodMapper;
 import br.com.fooddelivery.tialudeliveryback.repository.PaymentMethodRepository;
 import br.com.fooddelivery.tialudeliveryback.util.CreditCardValidator;
+import br.com.fooddelivery.tialudeliveryback.exception.FieldValidationError;
+import br.com.fooddelivery.tialudeliveryback.exception.ValidationException;
+import br.com.fooddelivery.tialudeliveryback.exception.ResourceNotFoundException;
 import br.com.fooddelivery.tialudeliveryback.util.SecurityUtils;
 import br.com.fooddelivery.tialudeliveryback.util.TokenizerUtils;
 import org.springframework.stereotype.Service;
@@ -30,41 +33,39 @@ public class PaymentMethodService {
         try {
             idLong = Long.parseLong(id);
         } catch (NumberFormatException e) {
-            throw new RuntimeException("ID_INVALIDO");
+            throw new ValidationException("Dados do cartão inválidos ou insuficientes.",
+                    java.util.List.of(new FieldValidationError("id", "ID inválido.")));
         }
 
         PaymentMethod entity = repository.findByIdAndUserId(idLong, userId)
-                .orElseThrow(() -> new RuntimeException("MEIO_PAGAMENTO_NAO_PERTENCE_AO_USUARIO"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("O meio de pagamento com ID '%s' não foi encontrado ou não pertence a este usuário.", id)));
 
+        java.util.List<FieldValidationError> erros = new java.util.ArrayList<>();
+
+        // VALIDAR NUMERO DO CARTAO (Luhn)
         if (!CreditCardValidator.isValid(req.getNumeroCartao())) {
-            throw new RuntimeException("NUMERO_CARTAO_INVALIDO");
+            erros.add(new FieldValidationError("numeroCartao", "Número do cartão inválido."));
         }
 
+        // VALIDAR CVV (não será persistido)
         if (!CreditCardValidator.isValidCvv(req.getCvv())) {
-            throw new RuntimeException("CVV_INVALIDO");
+            erros.add(new FieldValidationError("cvv", "O CVV fornecido é inválido."));
         }
 
         YearMonth validade = YearMonth.of(req.getValidadeAno(), req.getValidadeMes());
         if (validade.isBefore(YearMonth.now())) {
-            throw new RuntimeException("CARTAO_EXPIRADO");
+            erros.add(new FieldValidationError("validadeAno",
+                    String.format("A data de validade (%02d/%d) está expirada.", req.getValidadeMes(), req.getValidadeAno())));
         }
 
-        String token = TokenizerUtils.encrypt(req.getNumeroCartao());
-        String bandeira = CreditCardValidator.detectBrand(req.getNumeroCartao());
+        TipoCartao tipo = null;
+        try {
+            tipo = TipoCartao.valueOf(req.getTipoCartao());
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            erros.add(new FieldValidationError("tipoCartao", "Tipo de cartão inválido."));
+        }
 
-        entity.setNumeroTokenizado(token);
-        entity.setCvvTokenizado(TokenizerUtils.encrypt(req.getCvv()));
-        entity.setUltimosDigitos(req.getNumeroCartao().substring(req.getNumeroCartao().length() - 4));
-        entity.setBandeira(bandeira);
-        entity.setValidadeMes(req.getValidadeMes());
-        entity.setValidadeAno(req.getValidadeAno());
-        entity.setNomeTitular(req.getNomeTitular());
-        entity.setCpfTitular(req.getCpfTitular());
-        entity.setTipoCartao(TipoCartao.valueOf(req.getTipoCartao()));
-
-        repository.save(entity);
-
-        return PaymentMethodMapper.toDTO(entity);
-    }
-}
-
+        if (!erros.isEmpty()) {
+            throw new ValidationException("Dados do cartão inválidos ou insuficientes.", erros);
+        }
