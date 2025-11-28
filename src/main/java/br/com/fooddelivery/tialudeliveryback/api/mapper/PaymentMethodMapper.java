@@ -27,6 +27,7 @@ public class PaymentMethodMapper {
         // AGORA usando o método auxiliar do DTO (mais organizado)
         dto.setUltimosDigitos(PaymentMethodDTO.extrairUltimosDigitos(entity.getNumeroCartao()));
 
+
         return dto;
     }
 }
