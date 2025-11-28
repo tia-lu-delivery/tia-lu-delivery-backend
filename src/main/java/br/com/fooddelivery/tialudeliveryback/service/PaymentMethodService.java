@@ -1,62 +1,64 @@
 package br.com.fooddelivery.tialudeliveryback.service;
 
 import br.com.fooddelivery.tialudeliveryback.dto.UpdatePaymentMethodRequest;
-import br.com.fooddelivery.tialudeliveryback.dto.PaymentMethodResponse;
+import br.com.fooddelivery.tialudeliveryback.dto.PaymentMethodResponseDTO;
 import br.com.fooddelivery.tialudeliveryback.entity.PaymentMethod;
-import br.com.fooddelivery.tialudeliveryback.exception.NotFoundException;
-import br.com.fooddelivery.tialudeliveryback.repository.PaymentMethodRepository;
-import br.com.fooddelivery.tialudeliveryback.util.SecurityUtils;
-import br.com.fooddelivery.tialudeliveryback.util.CreditCardValidator;
-import br.com.fooddelivery.tialudeliveryback.util.TokenizerUtils;
+import br.com.fooddelivery.tialudeliveryback.enum_.TipoCartao;
 import br.com.fooddelivery.tialudeliveryback.mapper.PaymentMethodMapper;
+import br.com.fooddelivery.tialudeliveryback.repository.PaymentMethodRepository;
+import br.com.fooddelivery.tialudeliveryback.util.CreditCardValidator;
+import br.com.fooddelivery.tialudeliveryback.util.SecurityUtils;
+import br.com.fooddelivery.tialudeliveryback.util.TokenizerUtils;
 import org.springframework.stereotype.Service;
+
+import java.time.YearMonth;
 
 @Service
 public class PaymentMethodService {
 
     private final PaymentMethodRepository repository;
-    private final PaymentMethodMapper mapper;
 
-    public PaymentMethodService(PaymentMethodRepository repository, PaymentMethodMapper mapper) {
+    public PaymentMethodService(PaymentMethodRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
-    public PaymentMethodResponse updatePaymentMethod(Long id, UpdatePaymentMethodRequest req) {
+    public PaymentMethodResponseDTO updatePaymentMethod(String id, UpdatePaymentMethodRequest req) {
 
         Long userId = SecurityUtils.getAuthenticatedUserId();
 
-        PaymentMethod pm = repository
-                .findByIdAndUserId(id, userId)
-                .orElseThrow(() ->
-                        new NotFoundException("O meio de pagamento não foi encontrado ou não pertence ao usuário."));
+        PaymentMethod entity = repository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new RuntimeException("MEIO_PAGAMENTO_NAO_PERTENCE_AO_USUARIO"));
 
-        // --- validações (#142)
-        if (!CreditCardValidator.luhnCheck(req.getNumeroCartao()))
-            throw new IllegalArgumentException("Número de cartão inválido");
+        // VALIDAR NUMERO DO CARTAO (Luhn)
+        if (!CreditCardValidator.isValid(req.getNumeroCartao())) {
+            throw new RuntimeException("NUMERO_CARTAO_INVALIDO");
+        }
 
-        if (!CreditCardValidator.cvvValid(req.getCvv()))
-            throw new IllegalArgumentException("CVV inválido");
+        // VALIDAR CVV (não será persistido)
+        if (!CreditCardValidator.isValidCvv(req.getCvv())) {
+            throw new RuntimeException("CVV_INVALIDO");
+        }
 
-        if (!CreditCardValidator.expiryValid(req.getValidadeMes(), req.getValidadeAno()))
-            throw new IllegalArgumentException("Data de validade expirada");
+        YearMonth validade = YearMonth.of(req.getValidadeAno(), req.getValidadeMes());
+        if (validade.isBefore(YearMonth.now())) {
+            throw new RuntimeException("CARTAO_EXPIRADO");
+        }
 
-        if (!CreditCardValidator.tipoCartaoValido(req.getTipoCartao()))
-            throw new IllegalArgumentException("tipoCartao inválido");
+        String token = TokenizerUtils.encrypt(req.getNumeroCartao());
+        String bandeira = CreditCardValidator.detectBrand(req.getNumeroCartao());
 
-        String tokenCard = TokenizerUtils.tokenize(req.getNumeroCartao());
+        entity.setCardToken(token);
+        entity.setUltimosDigitos(req.getNumeroCartao().substring(req.getNumeroCartao().length() - 4));
+        entity.setBandeira(bandeira);
+        entity.setValidadeMes(req.getValidadeMes());
+        entity.setValidadeAno(req.getValidadeAno());
+        entity.setNomeTitular(req.getNomeTitular());
+        entity.setCpfTitular(req.getCpfTitular());
+        entity.setTipoCartao(TipoCartao.valueOf(req.getTipoCartao()));
 
-        pm.setCardToken(tokenCard);
-        pm.setLast4(CreditCardValidator.last4(req.getNumeroCartao()));
-        pm.setBrand(CreditCardValidator.detectBrand(req.getNumeroCartao()));
-        pm.setHolderName(req.getNomeTitular());
-        pm.setCpfHolder(req.getCpfTitular());
-        pm.setExpiryMonth(req.getValidadeMes());
-        pm.setExpiryYear(req.getValidadeAno());
-        pm.setCardType(req.getTipoCartao().toUpperCase());
+        repository.save(entity);
 
-        repository.save(pm);
-
-        return mapper.toResponse(pm);
+        return PaymentMethodMapper.toDTO(entity);
     }
 }
+
