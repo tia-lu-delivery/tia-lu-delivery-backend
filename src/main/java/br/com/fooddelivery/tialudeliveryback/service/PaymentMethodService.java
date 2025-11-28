@@ -26,15 +26,20 @@ public class PaymentMethodService {
 
         Long userId = SecurityUtils.getAuthenticatedUserId();
 
-        PaymentMethod entity = repository.findByIdAndUserId(id, userId)
+        Long idLong;
+        try {
+            idLong = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("ID_INVALIDO");
+        }
+
+        PaymentMethod entity = repository.findByIdAndUserId(idLong, userId)
                 .orElseThrow(() -> new RuntimeException("MEIO_PAGAMENTO_NAO_PERTENCE_AO_USUARIO"));
 
-        // VALIDAR NUMERO DO CARTAO (Luhn)
         if (!CreditCardValidator.isValid(req.getNumeroCartao())) {
             throw new RuntimeException("NUMERO_CARTAO_INVALIDO");
         }
 
-        // VALIDAR CVV (não será persistido)
         if (!CreditCardValidator.isValidCvv(req.getCvv())) {
             throw new RuntimeException("CVV_INVALIDO");
         }
@@ -47,7 +52,8 @@ public class PaymentMethodService {
         String token = TokenizerUtils.encrypt(req.getNumeroCartao());
         String bandeira = CreditCardValidator.detectBrand(req.getNumeroCartao());
 
-        entity.setCardToken(token);
+        entity.setNumeroTokenizado(token);
+        entity.setCvvTokenizado(TokenizerUtils.encrypt(req.getCvv()));
         entity.setUltimosDigitos(req.getNumeroCartao().substring(req.getNumeroCartao().length() - 4));
         entity.setBandeira(bandeira);
         entity.setValidadeMes(req.getValidadeMes());
