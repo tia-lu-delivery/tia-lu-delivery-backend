@@ -20,6 +20,9 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Endereco> enderecos;
 
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
     // Getters e Setters
     public Long getId() {
         return id;
@@ -51,5 +54,13 @@ public class Usuario {
 
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 }
