@@ -1,9 +1,9 @@
-package com.tialu.api.controller;
+package br.com.fooddelivery.tialudeliveryback.controller;
 
-import com.tialu.api.dto.ResponseDTO;
-import com.tialu.api.service.CardapioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import br.com.fooddelivery.tialudeliveryback.service.CardapioService;
+import br.com.fooddelivery.tialudeliveryback.dto.response.ResponseDTO;
 
 @RestController
 @RequestMapping("/api/v1/merchant/menu")

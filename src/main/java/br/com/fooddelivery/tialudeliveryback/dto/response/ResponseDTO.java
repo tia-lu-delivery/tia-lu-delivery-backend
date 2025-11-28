@@ -1,4 +1,4 @@
-package com.tialu.api.dto;
+package br.com.fooddelivery.tialudeliveryback.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
