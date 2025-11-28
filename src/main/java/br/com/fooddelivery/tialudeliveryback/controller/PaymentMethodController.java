@@ -1,8 +1,10 @@
 package br.com.fooddelivery.tialudeliveryback.controller;
 
 import br.com.fooddelivery.tialudeliveryback.dto.UpdatePaymentMethodRequest;
-import br.com.fooddelivery.tialudeliveryback.dto.PaymentMethodResponse;
+import br.com.fooddelivery.tialudeliveryback.dto.PaymentMethodResponseDTO;
 import br.com.fooddelivery.tialudeliveryback.service.PaymentMethodService;
+
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +19,11 @@ public class PaymentMethodController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaymentMethodResponse> update(
-            @PathVariable Long id,
-            @RequestBody UpdatePaymentMethodRequest request
+    public ResponseEntity<PaymentMethodResponseDTO> updatePaymentMethod(
+            @PathVariable String id,
+            @Valid @RequestBody UpdatePaymentMethodRequest request
     ) {
-        return ResponseEntity.ok(service.updatePaymentMethod(id, request));
+        PaymentMethodResponseDTO dto = service.updatePaymentMethod(id, request);
+        return ResponseEntity.ok(dto);
     }
 }
