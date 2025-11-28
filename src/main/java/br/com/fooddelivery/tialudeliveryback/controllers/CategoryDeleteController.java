@@ -6,18 +6,17 @@ import br.com.fooddelivery.tialudeliveryback.Service.RemoveCategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/merchant/menu/{id_cardapio}/categories")
 // Controller para deletar categoria de produtos e todos os produtos vinculados a ela
 public class CategoryDeleteController {
 
-    private final RemoveCategoryService categoryDeleteService;
+    private final RemoveCategoryService removeCategoryService;
 
-    public CategoryDeleteController(RemoveCategoryService categoryDeleteService) {
+    public CategoryDeleteController(RemoveCategoryService removeCategoryService) {
         // Define o Service que será usado para a lógica de exclusão
-        this.categoryDeleteService = categoryDeleteService;
+        this.removeCategoryService = removeCategoryService;
     }
 
     /*
@@ -32,14 +31,15 @@ public class CategoryDeleteController {
             @PathVariable("id_categoria") Long idCategoria) {
 
         // O controller chama o service, que retorna o DTO (seja de sucesso ou de erro)
-        DeleteCategoryResDTO responseDTO = categoryDeleteService.removeCategory(idCardapio, idCategoria);
+        DeleteCategoryResDTO responseDTO = removeCategoryService.deleteCategory(idCardapio, idCategoria);
 
         if (responseDTO.getErro() != null){
 
             String codigoErro = responseDTO.getErro().getCodigo();
 
             // Mapeamento 404 (Not Found)
-            if ("CATEGORIA_NAO_ENCONTRADA".equals(codigoErro)){
+            if ("CATEGORIA_NAO_ENCONTRADA".equals(codigoErro)
+                    || "CARDAPIO_NAO_ENCONTRADO".equals(codigoErro)){
                 // Retorna 404 com o corpo de erro já formatado pelo Service/Mapper
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseDTO);
             }
