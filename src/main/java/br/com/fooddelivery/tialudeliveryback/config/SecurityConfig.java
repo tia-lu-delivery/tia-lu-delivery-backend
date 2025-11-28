@@ -14,12 +14,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/h2-console/**", "/api/**").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(basic -> {})
             .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**")
+                .ignoringRequestMatchers("/h2-console/**", "/api/**")
             )
             .headers(headers -> headers
                 .frameOptions(frameOptions -> frameOptions.disable())
