@@ -1,6 +1,6 @@
 package br.com.fooddelivery.tialudeliveryback.dto;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 public class UpdatePaymentMethodRequest {
 
@@ -28,11 +28,10 @@ public class UpdatePaymentMethodRequest {
     private String cpfTitular;
 
     @NotBlank(message = "tipoCartao é obrigatório")
-    private String tipoCartao; // validado posteriormente contra ENUM
+    private String tipoCartao; 
 
     public UpdatePaymentMethodRequest() {}
 
-    // Getters e Setters
     public String getNumeroCartao() { return numeroCartao; }
     public void setNumeroCartao(String numeroCartao) { this.numeroCartao = numeroCartao; }
 
