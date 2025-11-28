@@ -1,7 +1,7 @@
 package br.com.fooddelivery.tialudeliveryback.controllers;
 
 import br.com.fooddelivery.tialudeliveryback.DTOs.DeleteCategoryResDTO;
-import br.com.fooddelivery.tialudeliveryback.Service.CategoryDeleteService; // 1. Serviço que contém a lógica de exclusão
+import br.com.fooddelivery.tialudeliveryback.Service.CategoryDeleteService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
