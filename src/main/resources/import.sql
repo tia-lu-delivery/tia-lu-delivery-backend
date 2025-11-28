@@ -1,0 +1,1 @@
+INSERT INTO establishment (id_estabelecimento) VALUES ('x9y8z7w6v5u4t3s2');
