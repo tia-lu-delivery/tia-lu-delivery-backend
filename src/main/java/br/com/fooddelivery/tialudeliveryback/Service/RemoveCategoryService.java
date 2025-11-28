@@ -16,10 +16,10 @@ public class RemoveCategoryService {
 
     public void removeCategory(Long id, Long menuId) {
         Menu menu = menuRepository.findById(menuId)
-                .orElseThrow(() -> new RuntimeException("Menu não encontrado"));
+            .orElseThrow(() -> new RuntimeException("Menu não encontrado"));
     
         Categoria category = categoriaRepository.findByIdAndMenuId(id, menuId)
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+            .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
     
         categoriaRepository.delete(category);
     }
