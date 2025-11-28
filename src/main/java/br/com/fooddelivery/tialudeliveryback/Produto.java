@@ -1,5 +1,7 @@
 package br.com.fooddelivery.tialudeliveryback;
 
+import br.com.fooddelivery.tialudeliveryback.Entity.Categoria;
+import br.com.fooddelivery.tialudeliveryback.Entity.Menu;
 import jakarta.persistence.*;
 
 @Entity

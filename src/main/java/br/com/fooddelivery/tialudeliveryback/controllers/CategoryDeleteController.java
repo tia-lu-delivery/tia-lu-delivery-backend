@@ -1,7 +1,7 @@
 package br.com.fooddelivery.tialudeliveryback.controllers;
 
-import br.com.fooddelivery.tialudeliveryback.DTOs.DeleteCategoryResDTO;
-import br.com.fooddelivery.tialudeliveryback.Service.CategoryDeleteService;
+import br.com.fooddelivery.tialudeliveryback.dto.DeleteCategoryResDTO;
+import br.com.fooddelivery.tialudeliveryback.Service.RemoveCategoryService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,9 @@ import java.util.Map;
 // Controller para deletar categoria de produtos e todos os produtos vinculados a ela
 public class CategoryDeleteController {
 
-    private final CategoryDeleteService categoryDeleteService;
+    private final RemoveCategoryService categoryDeleteService;
 
-    public CategoryDeleteController(CategoryDeleteService categoryDeleteService) {
+    public CategoryDeleteController(RemoveCategoryService categoryDeleteService) {
         // Define o Service que será usado para a lógica de exclusão
         this.categoryDeleteService = categoryDeleteService;
     }
@@ -32,7 +32,7 @@ public class CategoryDeleteController {
             @PathVariable("id_categoria") Long idCategoria) {
 
         // O controller chama o service, que retorna o DTO (seja de sucesso ou de erro)
-        DeleteCategoryResDTO responseDTO = categoryDeleteService.deleteCategory(idCardapio, idCategoria);
+        DeleteCategoryResDTO responseDTO = categoryDeleteService.removeCategory(idCardapio, idCategoria);
 
         if (responseDTO.getErro() != null){
 

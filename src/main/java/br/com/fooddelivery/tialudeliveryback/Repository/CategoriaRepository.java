@@ -1,7 +1,10 @@
-package br.com.fooddelivery.tialudeliveryback;
+package br.com.fooddelivery.tialudeliveryback.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import br.com.fooddelivery.tialudeliveryback.Entity.Categoria;
+
 import java.util.Optional;
 
 @Repository

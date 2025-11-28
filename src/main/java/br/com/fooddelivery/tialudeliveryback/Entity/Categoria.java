@@ -1,8 +1,10 @@
-package br.com.fooddelivery.tialudeliveryback;
+package br.com.fooddelivery.tialudeliveryback.Entity;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.fooddelivery.tialudeliveryback.Produto;
 
 @Entity
 public class Categoria {

@@ -1,4 +1,4 @@
-package br.com.fooddelivery.tialudeliveryback.DTOs;
+package br.com.fooddelivery.tialudeliveryback.dto;
 
 public class DeleteCategoryResDTO {
 

@@ -1,4 +1,4 @@
-package br.com.fooddelivery.tialudeliveryback.mapper;
+package br.com.fooddelivery.tialudeliveryback;
 
 import br.com.fooddelivery.tialudeliveryback.dto.DeleteCategoryResDTO;
 
