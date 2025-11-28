@@ -38,6 +38,7 @@ public class PaymentMethod {
     private TipoCartao tipoCartao;
 
     private String bandeira;
+    private String ultimosDigitos;
 
     public PaymentMethod() {}
 
@@ -70,4 +71,7 @@ public class PaymentMethod {
 
     public String getBandeira() { return bandeira; }
     public void setBandeira(String bandeira) { this.bandeira = bandeira; }
+
+    public String getUltimosDigitos() { return ultimosDigitos; }
+    public void setUltimosDigitos(String ultimosDigitos) { this.ultimosDigitos = ultimosDigitos; }
 }
