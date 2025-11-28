@@ -3,6 +3,7 @@ package br.com.fooddelivery.tialudeliveryback.util;
 import br.com.fooddelivery.tialudeliveryback.exception.UnauthorizedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class SecurityUtils {
 
@@ -18,7 +19,6 @@ public class SecurityUtils {
             throw new UnauthorizedException("Usuário não autenticado");
         }
 
-        // Tenta extrair getId() do usuário logado
         try {
             var method = principal.getClass().getMethod("getId");
             Object idObj = method.invoke(principal);
@@ -26,17 +26,20 @@ public class SecurityUtils {
                 return ((Number) idObj).longValue();
             }
         } catch (NoSuchMethodException ignored) {
-            // sem getId()
         } catch (Exception ignored) {
-            // qualquer erro chama fallback abaixo
         }
 
-        // Fallback: principal numérico
         if (principal instanceof Number) {
             return ((Number) principal).longValue();
         }
 
-        // Fallback: principal string convertível
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            try {
+                return Long.parseLong(username);
+            } catch (NumberFormatException ignored) {}
+        }
+
         if (principal instanceof String) {
             try {
                 return Long.parseLong((String) principal);
