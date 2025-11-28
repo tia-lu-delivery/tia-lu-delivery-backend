@@ -1,34 +1,46 @@
 package br.com.fooddelivery.tialudeliveryback.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data; // Se estiver usando Lombok, senão crie Getters e Setters
+import lombok.Data;
 
-@Data // Gera getters e setters automaticamente
+@Data
 public class PaymentMethodDTO {
-
-    @JsonProperty("id_meio_pagamento")
     private String idMeioPagamento;
-
     private String bandeira;
-
-    @JsonProperty("bandeira_url")
     private String bandeiraUrl;
-
-    @JsonProperty("ultimos_digitos")
-    private String ultimosDigitos;
-
-    @JsonProperty("nome_titular")
     private String nomeTitular;
-
-    @JsonProperty("validade_mes")
     private Integer validadeMes;
-
-    @JsonProperty("validade_ano")
     private Integer validadeAno;
-
-    @JsonProperty("tipo_cartao")
     private String tipoCartao;
-
-    @JsonProperty("status_ativo")
     private Boolean statusAtivo;
+    private String ultimosDigitos;
+    
+    // --- MÉTODOS AUXILIARES ADICIONADOS ---
+    
+    /**
+     * Extrai os últimos 4 dígitos do número do cartão
+     * Compatível com a lógica existente no Mapper
+     */
+    public static String extrairUltimosDigitos(String numeroCartao) {
+        if (numeroCartao == null || numeroCartao.length() < 4) {
+            return "****";
+        }
+        return numeroCartao.substring(numeroCartao.length() - 4);
+    }
+    
+    /**
+     * Formata a validade como "MM/AAAA" - OPICIONAL (pode ser usado no frontend)
+     */
+    public String getValidadeFormatada() {
+        if (validadeMes == null || validadeAno == null) {
+            return null;
+        }
+        return String.format("%02d/%d", validadeMes, validadeAno);
+    }
+    
+    /**
+     * Método conveniente para verificar se está ativo
+     */
+    public boolean isAtivo() {
+        return Boolean.TRUE.equals(statusAtivo);
+    }
 }
