@@ -14,7 +14,12 @@ public class RemoveCategoryService {
     private final CategoriaRepository categoriaRepository;
     private final MenuRepository menuRepository;
 
-    public DeleteCategoryResDTO deleteCategory(Long idCardapio, Long idCategoria) {
+    public DeleteCategoryResDTO deleteCategory(Long idCardapio, Long idCategoria, String tokenEstabelecimento) {
+        // Validação simples de autorização (ajuste conforme sua regra real de token)
+        if (tokenEstabelecimento == null || tokenEstabelecimento.isBlank()) {
+            return DeleteCategoryResMapper.toNaoAutorizado();
+        }
+
         // Primeiro, verifica se o cardápio existe
         if (!menuRepository.existsById(idCardapio)) {
             return DeleteCategoryResMapper.toCardapioNaoEncontrado(
@@ -24,7 +29,7 @@ public class RemoveCategoryService {
         }
 
         // Depois, verifica se a categoria existe e pertence a esse cardápio
-        return categoriaRepository.findByIdAndMenuId(idCategoria, idCardapio)
+        return categoriaRepository.findByIdAndMenu_Id(idCategoria, idCardapio)
             .map(categoria -> {
                 categoriaRepository.delete(categoria);
                 return DeleteCategoryResMapper.toSucesso(

@@ -28,10 +28,11 @@ public class CategoryDeleteController {
             // Captura o ID do cardápio definido na URL base
             @PathVariable("id_cardapio") Long idCardapio,
             // Captura o ID da Categoria a ser excluída, na parte final da URL
-            @PathVariable("id_categoria") Long idCategoria) {
+            @PathVariable("id_categoria") Long idCategoria,
+            @RequestHeader(value = "authentication", required = false) String tokenEstabelecimento) {
 
         // O controller chama o service, que retorna o DTO (seja de sucesso ou de erro)
-        DeleteCategoryResDTO responseDTO = removeCategoryService.deleteCategory(idCardapio, idCategoria);
+        DeleteCategoryResDTO responseDTO = removeCategoryService.deleteCategory(idCardapio, idCategoria, tokenEstabelecimento);
 
         if (responseDTO.getErro() != null){
 

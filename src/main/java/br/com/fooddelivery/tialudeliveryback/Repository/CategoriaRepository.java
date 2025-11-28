@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
-    // Busca pelo ID e menu para garantir que a categoria pertence àquele cardápio
-    Optional<Categoria> findByIdAndMenuId(Long id, Long menuId);
+    // Busca pelo ID e pelo ID do menu (via propriedade menu.id) para garantir que a categoria pertence àquele cardápio
+    Optional<Categoria> findByIdAndMenu_Id(Long id, Long menuId);
 
 }
