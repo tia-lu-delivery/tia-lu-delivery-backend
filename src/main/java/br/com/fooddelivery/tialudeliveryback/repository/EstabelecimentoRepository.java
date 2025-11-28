@@ -11,9 +11,9 @@ public interface EstabelecimentoRepository extends JpaRepository<Estabelecimento
 
     @Query("""
            select e
-             from CardapioEntity c
-             join c.estabelecimento e
-            where c.id = :idCardapio
+             from EstabelecimentoEntity e
+            where e.id = :idEstabelecimento
            """)
-    Optional<EstabelecimentoEntity> findByCardapioId(@Param("idCardapio") String idCardapio);
+    Optional<EstabelecimentoEntity> findById(@Param("idEstabelecimento") String idEstabelecimento);
+
 }
