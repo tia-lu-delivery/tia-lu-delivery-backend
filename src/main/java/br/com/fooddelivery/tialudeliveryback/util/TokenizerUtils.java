@@ -10,8 +10,6 @@ import java.util.Base64;
 
 public class TokenizerUtils {
 
-    // IMPORTANTE:
-    // A chave NÃO deve ficar no código fonte — deve vir de um Vault/KMS.
     private static final byte[] KEY = "CHANGE-ME-32-BYTES-KEY-123456789000000".getBytes(StandardCharsets.UTF_8);
 
     private static final String ALGORITHM = "AES/GCM/NoPadding";
