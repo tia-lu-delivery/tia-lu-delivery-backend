@@ -21,7 +21,7 @@ public class ProductService {
 
     public ProductResponseDTO getProductDetails(Long idRestaurante, Long idProduto) {
         Product product = repository
-                .findByRestaurantIdAndProductId(idRestaurante, idProduto)
+                .findByRestaurantIdAndId(idRestaurante, idProduto)
                 .orElseThrow(() -> new NoSuchElementException(
                         String.format("O produto '%d' não foi encontrado no cardápio do restaurante '%d'.",
                                 idProduto, idRestaurante)
@@ -30,3 +30,4 @@ public class ProductService {
         return mapper.toDTO(product);
     }
 }
+
