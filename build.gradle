@@ -38,4 +38,11 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+
+	// Mostrar saída padrão dos testes no console (System.out / System.err)
+	testLogging {
+		events "passed", "skipped", "failed"
+		showStandardStreams = true
+		exceptionFormat "full"
+	}
 }
