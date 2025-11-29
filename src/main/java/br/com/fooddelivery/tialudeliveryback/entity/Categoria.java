@@ -1,4 +1,4 @@
-package com.tialudelivery.bff.entity;
+package br.com.fooddelivery.tialudeliveryback.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 /**
  * Entidade JPA para mapear a tabela TB_CATEGORIA.
@@ -25,7 +23,7 @@ import java.util.UUID;
 @Builder // Gera um construtor com o padrão Builder (Lombok)
 @NoArgsConstructor // Gera um construtor sem argumentos (Lombok)
 @AllArgsConstructor // Gera um construtor com todos os argumentos (Lombok)
-public class CategoriaEntity {
+public class Categoria {
 
     /**
      * Identificador único da categoria (Chave Primária).
