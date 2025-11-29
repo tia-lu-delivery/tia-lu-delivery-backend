@@ -18,6 +18,9 @@ public class PaymentMethod {
     @Id
     private String id; // Ex: "MP001"
 
+    
+    @Column(name = "user_id", nullable = false)
+    private String userId; // dono do cartão / carteira
     // --- DADOS SENSÍVEIS (Existem aqui, mas o Mapper NÃO passa pro DTO) ---
     
     @Column(name = "numero_cartao")
