@@ -3,26 +3,29 @@ package br.com.fooddelivery.tialudeliveryback.service;
 import org.springframework.stereotype.Service;
 import br.com.fooddelivery.tialudeliveryback.dto.request.CategoriaRequestDTO;
 import br.com.fooddelivery.tialudeliveryback.dto.response.CategoriaResponseDTO;
+import br.com.fooddelivery.tialudeliveryback.dto.response.CategoriaResponseDTO.CategoriaData;
 
-@Service // Marca a classe como um Service do Spring
+@Service
 public class CategoriaService {
 
     public CategoriaResponseDTO createCategoria(String idCardapio, CategoriaRequestDTO requestDTO) {
-        // Implementação real da lógica (verificação de 404, 409, persistência, etc.) virá aqui.
-        // Por enquanto, apenas retorna um mock para compilar e passar no Controller.
         
-        // Exemplo de retorno mock:
-        CategoriaResponseDTO.CategoriaData data = new CategoriaResponseDTO.CategoriaData();
-        // ... setar dados ...
+        // 1. Instancia o objeto de dados
+        CategoriaData data = new CategoriaData();
+        
+        // 2. CORREÇÃO: Preenche os dados usando o que veio na Requisição (requestDTO)
+        data.setNomeCategoria(requestDTO.getNomeCategoria());
+        data.setOrdem(1); // Valor fixo para teste
+        data.setDisponivel(requestDTO.getDisponivel());
 
+        // 3. Cria a resposta final
         CategoriaResponseDTO response = new CategoriaResponseDTO();
-        response.setIdCategoria("e8d7c6b5a4f3e2d1");
-        response.setMensagem("Categoria '"+ requestDTO.getNomeCategoria() +"' criada e vinculada ao cardápio com sucesso.");
+        response.setIdCategoria("e8d7c6b5a4f3e2d1"); // ID Mock
+        response.setMensagem("Categoria '" + requestDTO.getNomeCategoria() + "' criada e vinculada ao cardápio com sucesso.");
+        
+        // 4. Coloca os dados preenchidos dentro da resposta
         response.setDados(data); 
 
         return response;
-        
-        // **IMPORTANTE:** O desenvolvedor responsável pelo Service precisa implementar AQUI
-        // a lógica de lançar CardapioNotFoundException e CategoriaConflictException.
     }
 }
